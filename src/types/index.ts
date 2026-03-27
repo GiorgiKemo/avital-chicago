@@ -16,6 +16,9 @@ export interface Service {
   shortDescription: string;
   description: string;
   icon: string;
+  pageTitle?: string;
+  metaDescription?: string;
+  contentHtml?: string;
 }
 
 export interface Area {
@@ -29,7 +32,7 @@ export interface BlogPost {
   title: string;
   excerpt: string;
   date: string;
-  content: string;
+  contentHtml: string;
   featuredImage?: string;
 }
 

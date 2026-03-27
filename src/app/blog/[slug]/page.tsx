@@ -40,21 +40,6 @@ export default async function BlogDetailPage({
     notFound();
   }
 
-  const paragraphs = post.content
-    .split(". ")
-    .map((sentence) => sentence.trim())
-    .filter(Boolean)
-    .reduce<string[]>((acc, sentence, index) => {
-      const bucket = Math.floor(index / 2);
-      if (!acc[bucket]) {
-        acc[bucket] = sentence;
-      } else {
-        acc[bucket] = `${acc[bucket]}. ${sentence}`;
-      }
-      return acc;
-    }, [])
-    .map((paragraph) => (paragraph.endsWith(".") ? paragraph : `${paragraph}.`));
-
   return (
     <article className="pb-24 pt-28">
       <div className="container mx-auto max-w-[900px] px-6">
@@ -91,11 +76,10 @@ export default async function BlogDetailPage({
           </div>
         )}
 
-        <div className="space-y-6 text-lg leading-relaxed text-muted-foreground">
-          {paragraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-        </div>
+        <div
+          className="legacy-blog-content text-lg leading-relaxed text-muted-foreground"
+          dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+        />
       </div>
     </article>
   );

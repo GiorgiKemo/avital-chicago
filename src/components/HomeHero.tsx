@@ -23,7 +23,7 @@ export default function HomeHero() {
   }, []);
 
   return (
-    <section className="relative flex min-h-[700px] items-center overflow-hidden pt-24">
+    <section className="relative flex min-h-[100svh] items-center overflow-hidden pt-24">
       {heroImages.map((image, index) => (
         <div
           key={image}

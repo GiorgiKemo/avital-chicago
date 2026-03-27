@@ -23,8 +23,8 @@ export function generateMetadata({
     }
 
     return {
-      title: service.name,
-      description: service.description,
+      title: service.pageTitle || service.name,
+      description: service.metaDescription || service.description,
     };
   });
 }
@@ -68,7 +68,7 @@ export default async function ServiceDetailPage({
           <div className="container mx-auto px-6">
             <p className="pink-label mb-3">{service.name}</p>
             <h1 className="font-serif text-4xl text-foreground md:text-5xl">
-              {service.name}
+              {service.pageTitle || service.name}
             </h1>
           </div>
         </div>
@@ -78,9 +78,16 @@ export default async function ServiceDetailPage({
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_380px]">
             <div>
-              <p className="mb-12 text-lg leading-relaxed text-muted-foreground">
-                {service.description}
-              </p>
+              {service.contentHtml ? (
+                <div
+                  className="legacy-blog-content mb-12 text-lg leading-relaxed text-muted-foreground"
+                  dangerouslySetInnerHTML={{ __html: service.contentHtml }}
+                />
+              ) : (
+                <p className="mb-12 text-lg leading-relaxed text-muted-foreground">
+                  {service.description}
+                </p>
+              )}
 
               <div className="glass-card-glow p-10 text-center">
                 <h2 className="mb-4 font-serif text-2xl text-foreground">
