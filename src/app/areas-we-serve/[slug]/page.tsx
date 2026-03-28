@@ -70,7 +70,7 @@ export default async function AreaDetailPage({
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/35 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-8">
                   <p className="pink-label mb-3">Serving {area.name}</p>
-                  <h1 className="font-serif text-4xl text-foreground md:text-5xl">
+                  <h1 className="font-serif text-5xl text-foreground md:text-6xl">
                     Party Bus & Limo Rental in{" "}
                     <span className="gradient-text font-semibold">{area.name}</span>
                   </h1>

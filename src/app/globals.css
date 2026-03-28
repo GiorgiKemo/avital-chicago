@@ -36,8 +36,8 @@
   --color-surface-card: #1c1c22;
   --color-pink-glow: rgba(212, 20, 90, 0.2);
 
-  --font-serif: var(--font-playfair), Georgia, serif;
-  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-lato), system-ui, sans-serif;
   --font-heading: var(--font-serif);
 
   --radius-sm: calc(var(--radius) * 0.6);
@@ -132,8 +132,8 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: var(--font-inter), system-ui, sans-serif;
-    font-size: 15px;
+    font-family: var(--font-lato), system-ui, sans-serif;
+    font-size: 16px;
     line-height: 1.7;
   }
 
@@ -143,7 +143,9 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-playfair), Georgia, serif;
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-weight: 600;
+    letter-spacing: 0;
   }
 }
 
@@ -178,18 +180,18 @@
   .pink-label {
     @apply text-xs font-semibold uppercase tracking-[0.2em];
     color: var(--primary);
-    font-family: var(--font-inter), sans-serif;
+    font-family: var(--font-lato), sans-serif;
   }
 
   .section-heading {
-    @apply text-3xl font-light md:text-4xl lg:text-5xl;
+    @apply text-4xl font-semibold leading-tight md:text-5xl lg:text-6xl;
   }
 
   .btn-primary {
     @apply relative inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-xs font-semibold uppercase tracking-[0.15em] transition-all duration-300;
     background: var(--gradient-pink);
     color: white;
-    font-family: var(--font-inter), sans-serif;
+    font-family: var(--font-lato), sans-serif;
   }
 
   .btn-primary:hover {
@@ -202,7 +204,7 @@
     border-color: var(--primary);
     color: var(--primary);
     background: transparent;
-    font-family: var(--font-inter), sans-serif;
+    font-family: var(--font-lato), sans-serif;
   }
 
   .btn-outline:hover {
@@ -211,9 +213,9 @@
   }
 
   .nav-link {
-    @apply relative text-[13px] font-medium uppercase tracking-[0.15em] transition-colors duration-300;
+    @apply relative text-[14px] font-medium uppercase tracking-[0.15em] transition-colors duration-300;
     color: rgba(255, 255, 255, 0.6);
-    font-family: var(--font-inter), sans-serif;
+    font-family: var(--font-lato), sans-serif;
   }
 
   .nav-link:hover {
@@ -241,11 +243,19 @@
   }
 
   .image-hover-zoom img {
-    @apply transition-transform duration-700 ease-out;
+    transform: scale(1.001);
+    transition-property: transform;
+    transition-duration: 1200ms;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
   }
 
   .image-hover-zoom:hover img {
-    @apply scale-110;
+    transform: scale(1.06);
+  }
+
+  .group:hover .image-hover-zoom img {
+    transform: scale(1.06);
   }
 
   .legacy-blog-content {
@@ -288,14 +298,49 @@
   .legacy-blog-content img {
     @apply my-8 h-auto max-w-full rounded-2xl border border-border;
   }
+
+  .legacy-area-content .equal-height-col-middle {
+    @apply grid gap-8 md:grid-cols-2 md:items-center;
+  }
+
+  .legacy-area-content .rental-ser-vice,
+  .legacy-area-content .passing-pass-col {
+    @apply min-w-0;
+  }
+
+  .legacy-area-content .rental-party-car,
+  .legacy-area-content .main-passing-boxes-img {
+    @apply overflow-hidden rounded-2xl border border-border bg-card/30;
+  }
+
+  .legacy-area-content .rental-party-car img,
+  .legacy-area-content .main-passing-boxes-img img {
+    @apply my-0 h-full w-full rounded-none border-0 object-cover;
+  }
+
+  .legacy-area-content .main-passing-boxes,
+  .legacy-area-content .rental-ser-vice-content,
+  .legacy-area-content .pass-head-para,
+  .legacy-area-content .lower-cont-subrubs {
+    @apply space-y-4;
+  }
+
+  .legacy-area-content .pass-head-para,
+  .legacy-area-content .lower-cont-subrubs {
+    @apply mb-6;
+  }
+
+  .legacy-area-content h2:first-child {
+    @apply mt-0;
+  }
 }
 
 @layer utilities {
   .font-serif-display {
-    font-family: var(--font-playfair), Georgia, serif;
+    font-family: var(--font-cormorant), Georgia, serif;
   }
 
   .font-sans-body {
-    font-family: var(--font-inter), system-ui, sans-serif;
+    font-family: var(--font-lato), system-ui, sans-serif;
   }
 }

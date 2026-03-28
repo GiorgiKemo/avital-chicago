@@ -43,3 +43,25 @@ dev-server-error.log
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# legacy raw asset dump from the old PHP site
+/public/images/*.png
+/public/images/*.jpg
+/public/images/*.jpeg
+/public/images/*.webp
+/public/images/*.ico
+/public/images/chicago-party-bus/
+/public/images/index-gallery/
+/public/images/old/
+/public/images/oxygen/
+/public/images/kids/
+/public/images/gallery/*-exterior/
+/public/images/gallery/*-interior/
+/public/images/gallery/*-exterrior/
+/public/images/gallery/*-interrior/
+/public/images/gallery/*-interiro/
+/public/images/gallery/*-exterior-interior/
+/public/images/gallery/pb/
+/public/images/services/**/*.jpg
+/public/images/services/**/*.jpeg
+/public/images/*-----

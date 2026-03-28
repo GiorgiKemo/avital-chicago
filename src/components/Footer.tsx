@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 
@@ -21,9 +22,16 @@ export default function Footer() {
       <div className="container mx-auto px-6">
         <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div>
-            <h3 className="mb-4 font-serif text-xl font-semibold text-foreground">
-              Avital <span className="gradient-text">Chicago</span>
-            </h3>
+            <Link href="/" className="mb-4 inline-flex" aria-label="Avital Chicago home">
+              <Image
+                src="/images/logos/logo-footer.webp"
+                alt="Avital Chicago logo"
+                width={207}
+                height={47}
+                className="h-auto w-[176px]"
+                style={{ height: "auto" }}
+              />
+            </Link>
             <p className="mb-6 text-sm leading-relaxed text-muted-foreground">
               Chicago&apos;s premier luxury limousine and party bus rental service.
               Making every journey unforgettable.
@@ -43,7 +51,10 @@ export default function Footer() {
               Quick Links
             </h4>
             <nav className="flex flex-col gap-3">
-              <Link href="/" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+              <Link
+                href="/"
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
                 Home
               </Link>
               <Link
@@ -70,7 +81,10 @@ export default function Footer() {
               >
                 Areas We Serve
               </Link>
-              <Link href="/blog" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+              <Link
+                href="/blog"
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
                 Blog
               </Link>
               <Link
@@ -131,8 +145,8 @@ export default function Footer() {
 
         <div className="gradient-divider mb-6" />
         <p className="text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Avital Chicago Limousine And Party Bus. All
-          rights reserved.
+          {"\u00A9"} {new Date().getFullYear()} Avital Chicago Limousine And Party Bus.
+          All rights reserved.
         </p>
       </div>
     </footer>

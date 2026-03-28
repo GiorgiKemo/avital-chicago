@@ -3,16 +3,20 @@ import { z } from "zod";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
 const quoteSchema = z.object({
-  name: z.string().min(1),
-  email: z.string().email(),
-  phone: z.string().min(7),
-  pickUp: z.string().optional(),
-  dropOff: z.string().optional(),
-  passengers: z.string().optional(),
+  name: z.string().trim().min(1),
+  email: z.string().trim().email(),
+  phone: z.string().trim().min(7),
+  pickUp: z.string().trim().min(1),
+  dropOff: z.string().trim().min(1),
+  passengers: z
+    .string()
+    .trim()
+    .regex(/^[1-9]\d*$/, "Passengers must be a valid number."),
   date: z.string().optional(),
-  eventType: z.string().optional(),
-  serviceType: z.string().optional(),
-  vehicleType: z.string().optional(),
+  eventType: z.string().trim().min(1),
+  serviceType: z.string().trim().min(1),
+  vehicleType: z.string().trim().min(1),
+  sourcePage: z.string().trim().optional(),
 });
 
 export async function POST(request: Request) {
@@ -72,5 +76,6 @@ export async function POST(request: Request) {
   return NextResponse.json({
     ok: true,
     message: "Quote request accepted.",
+    redirectTo: "/thank-you",
   });
 }

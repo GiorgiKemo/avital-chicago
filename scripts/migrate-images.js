@@ -10,6 +10,11 @@ const path = require('path');
 
 const OLD_SITE = path.resolve(__dirname, '../../OG Websites/avital design --2');
 const NEW_PUBLIC = path.resolve(__dirname, '../public/images');
+const HERO_FILES = new Set([
+  'hero-limo.jpg',
+  'partybus-interior.jpg',
+  'hero-partybus.jpg',
+]);
 
 // Map old gallery folder names (with typos) to clean vehicle slugs
 const GALLERY_MAP = {
@@ -142,7 +147,9 @@ const heroDir = path.join(NEW_PUBLIC, 'hero');
 ensureDir(heroDir);
 const newDesignAssets = path.resolve(__dirname, '../../avital-new-design/src/assets');
 if (fs.existsSync(newDesignAssets)) {
-  const heroFiles = fs.readdirSync(newDesignAssets).filter(isImage);
+  const heroFiles = fs.readdirSync(newDesignAssets).filter(
+    (file) => isImage(file) && HERO_FILES.has(file),
+  );
   for (const file of heroFiles) {
     if (copyFile(path.join(newDesignAssets, file), path.join(heroDir, file))) {
       totalCopied++;
@@ -158,7 +165,6 @@ ensureDir(logosDir);
 const logoFiles = [
   { src: 'images/logo.webp', dest: 'logo.webp' },
   { src: 'images/logo-footer.webp', dest: 'logo-footer.webp' },
-  { src: 'images/chicago-party-bus/logo-pb.webp', dest: 'logo-pb.webp' },
 ];
 for (const logo of logoFiles) {
   const srcPath = path.join(OLD_SITE, logo.src);

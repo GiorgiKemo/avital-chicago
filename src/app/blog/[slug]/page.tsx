@@ -59,7 +59,7 @@ export default async function BlogDetailPage({
           })}
         </div>
 
-        <h1 className="mb-8 font-serif text-3xl text-foreground md:text-4xl">
+        <h1 className="mb-8 font-serif text-4xl text-foreground md:text-5xl">
           {post.title}
         </h1>
 

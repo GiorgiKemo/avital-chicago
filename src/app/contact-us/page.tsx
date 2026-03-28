@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import JsonLd from "@/components/JsonLd";
 import PageHeader from "@/components/PageHeader";
 import QuoteForm from "@/components/QuoteForm";
+import { buildBreadcrumbJsonLd } from "@/lib/structured-data";
 
 const contactInfo = [
   {
@@ -37,6 +39,14 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
+      <JsonLd
+        id="contact-breadcrumb-schema"
+        data={buildBreadcrumbJsonLd([
+          { name: "Avital Limousine and Party Bus", item: "/" },
+          { name: "Contact Us", item: "/contact-us" },
+        ])}
+      />
+
       <PageHeader
         label="Contact Us"
         title={

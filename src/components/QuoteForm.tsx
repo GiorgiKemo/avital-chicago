@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 
@@ -21,32 +22,47 @@ const eventTypes = [
 ];
 const serviceTypes = ["Hourly", "Round Trip"];
 const vehicleTypes = ["Limousine", "Party Bus", "Charter Bus"];
+const defaultForm = {
+  name: "",
+  email: "",
+  phone: "",
+  pickUp: "",
+  dropOff: "",
+  passengers: "",
+  date: "",
+  eventType: "",
+  serviceType: "",
+  vehicleType: "",
+};
 
 export default function QuoteForm({
   className = "",
   compact = false,
 }: QuoteFormProps) {
+  const router = useRouter();
+  const pathname = usePathname();
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    pickUp: "",
-    dropOff: "",
-    passengers: "",
-    date: "",
-    eventType: "",
-    serviceType: "",
-    vehicleType: "",
-  });
+  const [form, setForm] = useState(defaultForm);
 
   const update = (field: string, value: string) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!form.name || !form.email || !form.phone) {
-      toast.error("Please fill in all required fields.");
+    const missingRequiredFields = [
+      form.name,
+      form.email,
+      form.phone,
+      form.pickUp,
+      form.dropOff,
+      form.passengers,
+      form.eventType,
+      form.serviceType,
+      form.vehicleType,
+    ].some((value) => !value.trim());
+
+    if (missingRequiredFields) {
+      toast.error("Please fill in all required fields marked with *.");
       return;
     }
 
@@ -56,29 +72,26 @@ export default function QuoteForm({
       const response = await fetch("/api/quote", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          sourcePage: pathname,
+        }),
       });
       const payload = (await response.json().catch(() => ({}))) as {
         message?: string;
+        redirectTo?: string;
       };
 
       if (!response.ok) {
         throw new Error(payload.message || "Submission failed");
       }
 
-      toast.success("Quote request submitted! We'll contact you shortly.");
-      setForm({
-        name: "",
-        email: "",
-        phone: "",
-        pickUp: "",
-        dropOff: "",
-        passengers: "",
-        date: "",
-        eventType: "",
-        serviceType: "",
-        vehicleType: "",
-      });
+      if (typeof window !== "undefined") {
+        window.gtag_report_conversion?.();
+      }
+
+      setForm(defaultForm);
+      router.push(payload.redirectTo || "/thank-you");
     } catch (error) {
       const message =
         error instanceof Error
@@ -143,17 +156,19 @@ export default function QuoteForm({
         >
           <input
             type="text"
-            placeholder="Pick up Location"
+            placeholder="Pick up Location *"
             value={form.pickUp}
             onChange={(event) => update("pickUp", event.target.value)}
             className={inputClass}
+            required
           />
           <input
             type="text"
-            placeholder="Drop off Location"
+            placeholder="Drop off Location *"
             value={form.dropOff}
             onChange={(event) => update("dropOff", event.target.value)}
             className={inputClass}
+            required
           />
         </div>
 
@@ -164,11 +179,12 @@ export default function QuoteForm({
         >
           <input
             type="number"
-            placeholder="# Passengers"
+            placeholder="# Passengers *"
             value={form.passengers}
             onChange={(event) => update("passengers", event.target.value)}
             className={inputClass}
             min="1"
+            required
           />
           <input
             type="date"
@@ -182,8 +198,9 @@ export default function QuoteForm({
           value={form.eventType}
           onChange={(event) => update("eventType", event.target.value)}
           className={selectClass}
+          required
         >
-          <option value="">Event Type</option>
+          <option value="">Event Type *</option>
           {eventTypes.map((type) => (
             <option key={type} value={type}>
               {type}
@@ -196,8 +213,9 @@ export default function QuoteForm({
             value={form.serviceType}
             onChange={(event) => update("serviceType", event.target.value)}
             className={selectClass}
+            required
           >
-            <option value="">Service Type</option>
+            <option value="">Service Type *</option>
             {serviceTypes.map((type) => (
               <option key={type} value={type}>
                 {type}
@@ -208,8 +226,9 @@ export default function QuoteForm({
             value={form.vehicleType}
             onChange={(event) => update("vehicleType", event.target.value)}
             className={selectClass}
+            required
           >
-            <option value="">Vehicle</option>
+            <option value="">Vehicle *</option>
             {vehicleTypes.map((type) => (
               <option key={type} value={type}>
                 {type}

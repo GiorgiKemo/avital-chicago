@@ -94,6 +94,10 @@ function redirectTo(request: NextRequest, destination: string) {
   return NextResponse.redirect(new URL(destination, request.url), 308);
 }
 
+function rewriteTo(request: NextRequest, destination: string) {
+  return NextResponse.rewrite(new URL(destination, request.url));
+}
+
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -113,7 +117,7 @@ export function proxy(request: NextRequest) {
   if (legacyAreaMatch) {
     const areaSlug = legacyAreaMatch[1].toLowerCase();
     if (legacyAreaSlugs.has(areaSlug)) {
-      return redirectTo(request, `/areas-we-serve/${areaSlug}`);
+      return rewriteTo(request, `/service-areas/${areaSlug}`);
     }
   }
 

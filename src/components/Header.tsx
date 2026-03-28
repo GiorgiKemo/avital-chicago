@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, Phone, X } from "lucide-react";
 
 const navServices = [
@@ -15,6 +17,7 @@ const navServices = [
 ];
 
 export default function Header() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -24,6 +27,15 @@ export default function Header() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setMobileOpen(false);
+      setServicesOpen(false);
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, [pathname]);
 
   const closeMenus = () => {
     setMobileOpen(false);
@@ -39,10 +51,15 @@ export default function Header() {
       }`}
     >
       <div className="container mx-auto flex h-20 items-center justify-between px-6">
-        <Link href="/" className="flex items-center gap-3">
-          <span className="font-serif text-xl font-semibold tracking-tight text-foreground">
-            Avital <span className="gradient-text">Chicago</span>
-          </span>
+        <Link href="/" className="flex items-center" aria-label="Avital Chicago home">
+          <Image
+            src="/images/logos/logo.webp"
+            alt="Avital Chicago logo"
+            width={174}
+            height={45}
+            priority
+            className="shrink-0"
+          />
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">

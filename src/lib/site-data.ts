@@ -10,9 +10,9 @@ import {
   shuttleBus,
 } from "@/lib/data";
 
-const defaultPartyBusImage = "/images/hero/hero-partybus.jpg";
-const defaultLimoImage = "/images/hero/hero-limo.jpg";
-const defaultServiceImage = "/images/hero/service-wedding.jpg";
+const defaultPartyBusImage = "/images/gallery/hummer-h2-triple-axle/exterior/01.webp";
+const defaultLimoImage = "/images/gallery/cadillac-escalade/exterior/01.webp";
+const defaultServiceImage = "/images/gallery/cadillac-escalade/exterior/01.webp";
 
 export const blogPosts: BlogPost[] = legacyBlogPosts as BlogPost[];
 const legacyServicesBySlug = new Map(
@@ -27,15 +27,15 @@ export const services = baseServices.map((service) => ({
 }));
 
 const serviceImageMap: Record<string, string> = {
-  wedding: "/images/hero/service-wedding.jpg",
-  quinceanera: "/images/hero/service-quinceanera.jpg",
-  "night-parties": "/images/hero/service-nightout.jpg",
-  prom: "/images/services/chicago-prom-party.webp",
+  wedding: "/images/gallery/cadillac-escalade/exterior/01.webp",
+  quinceanera: "/images/gallery/hummer-h2-triple-axle/exterior/01.webp",
+  "night-parties": "/images/gallery/tiffany-miami/interior/DSC03542-min.JPG",
+  prom: "/images/gallery/lincoln-navigator/exterior/01.webp",
   "bachelor-bachelorette":
-    "/images/services/bachelor-bachelorette-party-limousine.webp",
-  "concerts-sports": "/images/services/chicago-limo-rental-services.webp",
-  birthday: "/images/services/birthday-party.webp",
-  graduation: "/images/services/chicago-limo-rental-services.webp",
+    "/images/gallery/diamond/interior/DSC03601-min.JPG",
+  "concerts-sports": "/images/gallery/infiniti-qx56/exterior/01.webp",
+  birthday: "/images/gallery/tiffany-miami/interior/DSC03542-min.JPG",
+  graduation: "/images/gallery/lincoln-navigator/exterior/01.webp",
   "kids-party-bus": defaultPartyBusImage,
 };
 

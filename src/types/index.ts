@@ -27,6 +27,38 @@ export interface Area {
   description: string;
 }
 
+export interface LegacyAreaService {
+  slug: string;
+  areaName: string;
+  legacyPath: string;
+  pageTitle: string;
+  metaDescription: string;
+  bannerImage?: string;
+  introHtml?: string;
+  servicesHtml?: string;
+  fleetHtml?: string;
+  whyChooseHtml?: string;
+  attractionsHtml?: string;
+  mapEmbedUrl?: string;
+  relatedPostSlugs: string[];
+}
+
+export interface LegacyVehicleDetail {
+  slug: string;
+  kind: "party-bus" | "limo";
+  sourceFile: string;
+  legacyPath: string;
+  pageTitle: string;
+  metaDescription: string;
+  featureHeading: string;
+  breadcrumbParentLabel: string;
+  breadcrumbParentHref: string;
+  breadcrumbCurrentLabel: string;
+  featureList: string[];
+  descriptionParagraphs: string[];
+  youtubeId?: string;
+}
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -40,11 +72,12 @@ export interface QuoteSubmission {
   name: string;
   email: string;
   phone: string;
-  pickUp?: string;
-  dropOff?: string;
-  passengers?: string;
+  pickUp: string;
+  dropOff: string;
+  passengers: string;
   date?: string;
-  eventType?: string;
-  serviceType?: string;
-  vehicleType?: string;
+  eventType: string;
+  serviceType: string;
+  vehicleType: string;
+  sourcePage?: string;
 }

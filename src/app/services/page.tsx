@@ -35,12 +35,12 @@ export default function ServicesPage() {
                 href={`/services/${service.slug}`}
                 className="group glass-card overflow-hidden"
               >
-                <div className="relative aspect-[4/3] overflow-hidden">
+                <div className="image-hover-zoom relative aspect-[4/3]">
                   <Image
                     src={getServiceImage(service.slug)}
                     alt={service.name}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="object-cover"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />

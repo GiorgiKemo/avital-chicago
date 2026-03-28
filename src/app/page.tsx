@@ -45,13 +45,15 @@ export default function HomePage() {
                 href={`/services/${service.slug}`}
                 className="group relative h-[450px] overflow-hidden rounded-xl"
               >
-                <Image
-                  src={getServiceImage(service.slug)}
-                  alt={service.name}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
+                <div className="image-hover-zoom absolute inset-0">
+                  <Image
+                    src={getServiceImage(service.slug)}
+                    alt={service.name}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-6">
                   <h3 className="font-serif text-2xl text-foreground">
@@ -267,7 +269,7 @@ export default function HomePage() {
                 key={card.num}
                 className="glass-card p-8 transition-all duration-300 hover:border-primary/20"
               >
-                <span className="font-serif text-3xl font-semibold gradient-text">
+                <span className="gradient-text font-serif text-3xl font-semibold">
                   {card.num}
                 </span>
                 <div className="mb-4 mt-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">

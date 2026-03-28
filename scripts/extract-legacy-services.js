@@ -7,6 +7,10 @@ const oldSiteDir = path.resolve(
   "../../OG Websites/avital design --2",
 );
 const outputPath = path.resolve(__dirname, "../src/lib/legacy-services.json");
+const areaOutputPath = path.resolve(
+  __dirname,
+  "../src/lib/legacy-area-services.json",
+);
 
 const serviceFileMap = {
   wedding: "services-weddings.php",
@@ -171,6 +175,27 @@ function rewriteLegacyUrls(html) {
   );
 }
 
+function slugToTitle(input) {
+  return input
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function mapLegacyAreaImageUrl(slug, rawUrl) {
+  const normalized = normalizeUrl(rawUrl);
+  const rootImageMatch = normalized.match(
+    /^\/images\/([^/]+\.(?:png|jpe?g|webp|gif))$/i,
+  );
+
+  if (!rootImageMatch) {
+    return normalized;
+  }
+
+  return `/images/areas/${slug}/${rootImageMatch[1]}`;
+}
+
 function extractBalancedDiv(html, marker) {
   const start = html.indexOf(marker);
   if (start === -1) {
@@ -203,18 +228,24 @@ function extractBalancedDiv(html, marker) {
   return "";
 }
 
-function cleanServiceHtml(contentHtml) {
+function cleanLegacyHtml(contentHtml) {
   return repairMojibake(
     rewriteLegacyUrls(
+      contentHtml
+        .replace(/<script[\s\S]*?<\/script>/gi, "")
+        .replace(/<\?php[\s\S]*?\?>/g, "")
+        .replace(/\r/g, "")
+        .trim(),
+    ),
+  );
+}
+
+function cleanServiceHtml(contentHtml) {
+  return cleanLegacyHtml(
     contentHtml
       .replace(/<h1[^>]*>[\s\S]*?<\/h1>/i, "")
       .replace(/<div class="row services">[\s\S]*?<\/div>\s*<\/div>/i, "")
-      .replace(/<div class="gallery">[\s\S]*?<\/div>\s*<\/div>/i, "")
-      .replace(/<script[\s\S]*?<\/script>/gi, "")
-      .replace(/<\?php[\s\S]*?\?>/g, "")
-      .replace(/\r/g, "")
-      .trim(),
-    ),
+      .replace(/<div class="gallery">[\s\S]*?<\/div>\s*<\/div>/i, ""),
   );
 }
 
@@ -226,6 +257,40 @@ function extractTitle(contentHtml, fallback) {
 function extractDescription(pageHtml) {
   const match = pageHtml.match(/<meta\s+name="description"\s+content="([^"]*)"/i);
   return match ? decodeHtmlEntities(match[1]).replace(/\s+/g, " ").trim() : "";
+}
+
+function extractBannerImage(pageHtml, slug) {
+  const match = pageHtml.match(
+    /\.banner-image\s*\{[\s\S]*?background-image:\s*url\((['"]?)(.*?)\1\)/i,
+  );
+  return match ? mapLegacyAreaImageUrl(slug, match[2]) : "";
+}
+
+function extractIframeSrc(pageHtml) {
+  const match = pageHtml.match(/<iframe[^>]+src="([^"]+)"/i);
+  return match ? match[1] : "";
+}
+
+function cleanAreaSectionHtml(contentHtml, slug) {
+  return cleanLegacyHtml(contentHtml)
+    .replace(
+      /src="\/images\/([^/"]+\.(?:png|jpe?g|webp|gif))"/gi,
+      (_, fileName) => `src="/images/areas/${slug}/${fileName}"`,
+    )
+    .replace(
+      /href="\/images\/([^/"]+\.(?:png|jpe?g|webp|gif))"/gi,
+      (_, fileName) => `href="/images/areas/${slug}/${fileName}"`,
+    );
+}
+
+function extractRelatedPostSlugs(sectionHtml) {
+  if (!sectionHtml) {
+    return [];
+  }
+
+  const matches = [...sectionHtml.matchAll(/\/blog\/([^/"?#]+)\.php/gi)];
+  const uniqueSlugs = new Set(matches.map((match) => match[1]));
+  return [...uniqueSlugs];
 }
 
 const serviceContent = Object.entries(serviceFileMap).map(([slug, fileName]) => {
@@ -241,5 +306,72 @@ const serviceContent = Object.entries(serviceFileMap).map(([slug, fileName]) => 
   };
 });
 
+const areaServiceDir = path.join(oldSiteDir, "services");
+const areaServiceFiles = fs
+  .readdirSync(areaServiceDir)
+  .filter((fileName) =>
+    /^luxury-party-bus-and-limousine-rental-service-in-[a-z-]+-il\.php$/i.test(
+      fileName,
+    ),
+  )
+  .sort();
+
+const areaServiceContent = areaServiceFiles.map((fileName) => {
+  const fullPath = path.join(areaServiceDir, fileName);
+  const pageHtml = fs.readFileSync(fullPath, "utf8");
+  const slugMatch = fileName.match(
+    /^luxury-party-bus-and-limousine-rental-service-in-([a-z-]+)-il\.php$/i,
+  );
+  const slug = slugMatch ? slugMatch[1].toLowerCase() : fileName;
+  const breadcrumbMatch = pageHtml.match(/<span>([^<]+)<\/span>\s*<\/p>/i);
+  const areaName = breadcrumbMatch
+    ? stripTags(breadcrumbMatch[1])
+    : slugToTitle(slug);
+  const blogSectionHtml = extractBalancedDiv(
+    pageHtml,
+    '<div class="section-three-blog-page">',
+  );
+
+  return {
+    slug,
+    areaName,
+    legacyPath: `/services/${fileName}`,
+    pageTitle: repairMojibake(
+      decodeHtmlEntities(
+        (pageHtml.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] ||
+          `Luxury Party Bus and Limousine Rental Service in ${areaName}, IL`,
+      ).trim(),
+    ),
+    metaDescription: extractDescription(pageHtml),
+    bannerImage: extractBannerImage(pageHtml, slug),
+    introHtml: cleanAreaSectionHtml(
+      extractBalancedDiv(pageHtml, '<div class="para-content">'),
+      slug,
+    ),
+    servicesHtml: cleanAreaSectionHtml(
+      extractBalancedDiv(pageHtml, '<div class="prices-services-limo">'),
+      slug,
+    ),
+    fleetHtml: cleanAreaSectionHtml(
+      extractBalancedDiv(pageHtml, '<div class="Long-limos-subrubs">'),
+      slug,
+    ),
+    whyChooseHtml: cleanAreaSectionHtml(
+      extractBalancedDiv(pageHtml, '<div class="left-side-pe-image">'),
+      slug,
+    ),
+    attractionsHtml: cleanAreaSectionHtml(
+      extractBalancedDiv(pageHtml, '<div class="pass-cars-type-limos">'),
+      slug,
+    ),
+    mapEmbedUrl: extractIframeSrc(pageHtml),
+    relatedPostSlugs: extractRelatedPostSlugs(blogSectionHtml),
+  };
+});
+
 fs.writeFileSync(outputPath, `${JSON.stringify(serviceContent, null, 2)}\n`);
+fs.writeFileSync(areaOutputPath, `${JSON.stringify(areaServiceContent, null, 2)}\n`);
 console.log(`Extracted ${serviceContent.length} legacy service pages to ${outputPath}`);
+console.log(
+  `Extracted ${areaServiceContent.length} legacy area service pages to ${areaOutputPath}`,
+);

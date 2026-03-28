@@ -60,6 +60,7 @@ export default async function ServiceDetailPage({
           alt={service.name}
           fill
           priority
+          quality={95}
           className="object-cover"
           sizes="100vw"
         />
@@ -67,7 +68,7 @@ export default async function ServiceDetailPage({
         <div className="absolute inset-x-0 bottom-0 pb-12">
           <div className="container mx-auto px-6">
             <p className="pink-label mb-3">{service.name}</p>
-            <h1 className="font-serif text-4xl text-foreground md:text-5xl">
+            <h1 className="font-serif text-5xl text-foreground md:text-6xl">
               {service.pageTitle || service.name}
             </h1>
           </div>

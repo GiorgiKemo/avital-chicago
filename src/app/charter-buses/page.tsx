@@ -32,7 +32,10 @@ export default function CharterBusesPage() {
             <div>
               <div className="relative mb-8 aspect-[16/8] overflow-hidden rounded-2xl">
                 <Image
-                  src={shuttleBus.images[0] || "/images/hero/hero-partybus.jpg"}
+                  src={
+                    shuttleBus.images[0] ||
+                    "/images/gallery/shuttle-bus/exterior/01.webp"
+                  }
                   alt={shuttleBus.name}
                   fill
                   priority

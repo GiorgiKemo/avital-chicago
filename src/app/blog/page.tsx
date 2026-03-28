@@ -33,12 +33,15 @@ export default function BlogPage() {
                 href={`/blog/${post.slug}`}
                 className="group glass-card overflow-hidden"
               >
-                <div className="relative aspect-video overflow-hidden">
+                <div className="image-hover-zoom relative aspect-video">
                   <Image
-                    src={post.featuredImage || "/images/hero/hero-partybus.jpg"}
+                    src={
+                      post.featuredImage ||
+                      "/images/gallery/hummer-h2-triple-axle/exterior/01.webp"
+                    }
                     alt={post.title}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="object-cover"
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>

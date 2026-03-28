@@ -5,7 +5,7 @@ const imageManifest = manifest as Record<string, { interior: string[]; exterior:
 
 function getVehicleImages(slug: string): string[] {
   const entry = imageManifest[slug];
-  if (!entry) return ["/images/hero/hero-partybus.jpg"];
+  if (!entry) return ["/images/gallery/hummer-h2-triple-axle/exterior/01.webp"];
   return [...entry.interior, ...entry.exterior].slice(0, 20);
 }
 
