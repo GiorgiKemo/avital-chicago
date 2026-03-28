@@ -50,7 +50,7 @@ export default function KidsPartyBusPage() {
 
       <section className="relative overflow-hidden pb-14 pt-28">
         <Image
-          src="/images/kids/KidsHome.png"
+          src="/images/kids/KidsHome.webp"
           alt="Kids party bus rental in Chicago"
           fill
           priority
@@ -172,7 +172,7 @@ export default function KidsPartyBusPage() {
 
             <div className="image-hover-zoom relative aspect-[4/5] overflow-hidden rounded-3xl border border-border">
               <Image
-                src="/images/kids/Test2.png"
+                src="/images/kids/Test2.webp"
                 alt="Kids party bus interior"
                 fill
                 quality={95}
@@ -220,7 +220,7 @@ export default function KidsPartyBusPage() {
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(320px,420px)_minmax(0,1fr)] lg:items-center">
             <div className="image-hover-zoom relative aspect-[4/5] overflow-hidden rounded-3xl border border-border">
               <Image
-                src="/images/kids/Test3.png"
+                src="/images/kids/Test3.webp"
                 alt="Kids party bus event experience"
                 fill
                 quality={95}

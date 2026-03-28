@@ -7,17 +7,17 @@ import { ArrowRight, Calendar, Star, Users } from "lucide-react";
 
 const heroImages = [
   {
-    src: "/images/hero/hero-limo.jpg",
+    src: "/images/hero/hero-limo.webp",
     alt: "White limousine at night in downtown Chicago",
     position: "center center",
   },
   {
-    src: "/images/hero/partybus-interior.jpg",
+    src: "/images/hero/partybus-interior.webp",
     alt: "Luxury party bus interior with purple lighting",
     position: "center center",
   },
   {
-    src: "/images/hero/hero-partybus.jpg",
+    src: "/images/hero/hero-partybus.webp",
     alt: "Black party bus in downtown Chicago at night",
     position: "center center",
   },

@@ -66,7 +66,7 @@ export const partyBusFleetContent: FleetLandingContent = {
   metaTitle: "Chicago Party Bus Rental",
   metaDescription:
     "Browse Avital Chicago's party bus fleet, event coverage, pricing notes, FAQs, and real galleries for each party bus model.",
-  heroImage: "/images/gallery/chicago-edition/exterior/dsc_1936.jpg",
+  heroImage: "/images/gallery/chicago-edition/exterior/dsc_1936.webp",
   heroAlt: "Chicago party bus from the legacy Avital fleet",
   introParagraphs: [
     "Are you looking to hire a limo party bus in Chicago, or trying to understand the best rental prices in Chicagoland? You are in the right place.",
@@ -206,7 +206,7 @@ export const limoFleetContent: FleetLandingContent = {
   metaTitle: "Chicago Limousine Rental",
   metaDescription:
     "Explore Avital Chicago's limousine fleet with real limo galleries, event coverage, booking guidance, FAQs, and related planning content.",
-  heroImage: "/images/gallery/cadillac-escalade/exterior/CADILLAC ESCALADE.jpg",
+  heroImage: "/images/gallery/cadillac-escalade/exterior/CADILLAC ESCALADE.webp",
   heroAlt: "Cadillac Escalade limousine from the legacy Avital fleet",
   introParagraphs: [
     "If you are looking for limo service in Chicago, our fleet covers everything from executive SUV limos to stretch models built for weddings, nightlife, and milestone celebrations.",
@@ -230,7 +230,7 @@ export const limoFleetContent: FleetLandingContent = {
   fleetDescription:
     "The limo lineup focuses on stretch SUVs and executive-style limousines with strong interiors, clear capacity ranges, and enough variety to cover both intimate and larger bookings.",
   spotlightTitle: "Long Limos To Hire in Chicago Suburbs",
-  spotlightImage: "/images/gallery/hummer-h2-white-pearl/exterior/HUMMER H2 WHITE PEARL.png",
+  spotlightImage: "/images/gallery/hummer-h2-white-pearl/exterior/HUMMER H2 WHITE PEARL.webp",
   spotlightAlt: "White Hummer stretch limousine from the legacy Avital fleet",
   spotlightParagraphs: [
     "The old limo page centered the fleet around real capacity expectations, from the 14-passenger Lincoln Navigator to the 30-passenger Triple Axle Hummer H2.",

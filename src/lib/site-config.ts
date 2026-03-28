@@ -22,7 +22,7 @@ export const siteConfig = {
   },
   images: {
     logo: "/images/logos/logo.webp",
-    og: "/images/hero/hero-partybus.jpg",
+    og: "/images/hero/hero-partybus.webp",
   },
 } as const;
 
