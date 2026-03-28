@@ -10,10 +10,12 @@ import {
   Video,
 } from "lucide-react";
 import JsonLd from "@/components/JsonLd";
+import ManagedImage from "@/components/ManagedImage";
 import QuoteForm from "@/components/QuoteForm";
 import VehicleCard from "@/components/VehicleCard";
 import { cleanLegacyList, cleanLegacyText } from "@/lib/clean-legacy-text";
 import { getLegacyVehicleDetail } from "@/lib/legacy-vehicle-details";
+import { getVehicleHeroSlotKey } from "@/lib/site-media-slots";
 import { buildBreadcrumbJsonLd } from "@/lib/structured-data";
 import type { Vehicle } from "@/types";
 
@@ -121,9 +123,10 @@ export default function VehicleDetailPage({
               </div>
 
               <div className="image-hover-zoom relative mt-8 aspect-[16/10] overflow-hidden rounded-3xl border border-border">
-                <Image
-                  src={heroImage}
-                  alt={vehicle.name}
+                <ManagedImage
+                  slotKey={getVehicleHeroSlotKey(basePath, vehicle.slug)}
+                  fallbackSrc={heroImage}
+                  fallbackAlt={vehicle.name}
                   fill
                   priority
                   quality={95}

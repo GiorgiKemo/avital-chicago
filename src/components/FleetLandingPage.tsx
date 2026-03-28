@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Calendar, Check, Phone } from "lucide-react";
 import JsonLd from "@/components/JsonLd";
+import ManagedImage from "@/components/ManagedImage";
 import QuoteForm from "@/components/QuoteForm";
 import VehicleCard from "@/components/VehicleCard";
 import type { FleetLandingContent } from "@/lib/fleet-page-content";
@@ -36,6 +37,7 @@ export default function FleetLandingPage({
     /\s+/g,
     " ",
   );
+  const fleetSlotPrefix = basePath.includes("party-bus") ? "fleet.party-bus" : "fleet.limo";
 
   return (
     <>
@@ -48,9 +50,10 @@ export default function FleetLandingPage({
       />
 
       <section className="relative overflow-hidden pb-16 pt-28">
-        <Image
-          src={content.heroImage}
-          alt={content.heroAlt}
+        <ManagedImage
+          slotKey={`${fleetSlotPrefix}.hero`}
+          fallbackSrc={content.heroImage}
+          fallbackAlt={content.heroAlt}
           fill
           priority
           quality={95}
@@ -190,9 +193,10 @@ export default function FleetLandingPage({
             </div>
 
             <div className="image-hover-zoom relative aspect-[4/5] overflow-hidden rounded-3xl border border-border">
-              <Image
-                src={content.spotlightImage}
-                alt={content.spotlightAlt}
+              <ManagedImage
+                slotKey={`${fleetSlotPrefix}.spotlight`}
+                fallbackSrc={content.spotlightImage}
+                fallbackAlt={content.spotlightAlt}
                 fill
                 quality={95}
                 className="object-cover"
@@ -258,9 +262,10 @@ export default function FleetLandingPage({
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-center">
               <div className="image-hover-zoom relative aspect-[4/5] overflow-hidden rounded-3xl border border-border">
-                <Image
-                  src={content.pricingImage}
-                  alt={content.pricingAlt || content.pricingTitle}
+                <ManagedImage
+                  slotKey={`${fleetSlotPrefix}.pricing`}
+                  fallbackSrc={content.pricingImage}
+                  fallbackAlt={content.pricingAlt || content.pricingTitle}
                   fill
                   quality={95}
                   className="object-cover"

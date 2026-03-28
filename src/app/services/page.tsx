@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import ManagedImage from "@/components/ManagedImage";
 import PageHeader from "@/components/PageHeader";
-import { getServiceImage, services } from "@/lib/site-data";
+import { getServiceImage, getServiceSlotKey, services } from "@/lib/site-data";
 
 export const metadata: Metadata = {
   title: "Transportation Services",
@@ -36,9 +36,10 @@ export default function ServicesPage() {
                 className="group glass-card overflow-hidden"
               >
                 <div className="image-hover-zoom relative aspect-[4/3]">
-                  <Image
-                    src={getServiceImage(service.slug)}
-                    alt={service.name}
+                  <ManagedImage
+                    slotKey={getServiceSlotKey(service.slug)}
+                    fallbackSrc={getServiceImage(service.slug)}
+                    fallbackAlt={service.name}
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 33vw"

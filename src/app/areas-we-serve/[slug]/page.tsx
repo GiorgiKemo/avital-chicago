@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { notFound } from "next/navigation";
+import ManagedImage from "@/components/ManagedImage";
 import QuoteForm from "@/components/QuoteForm";
-import { areas, getAreaImage, services } from "@/lib/site-data";
+import { areas, getAreaImage, getAreaSlotKey, services } from "@/lib/site-data";
 
 export function generateStaticParams() {
   return areas.map((area) => ({ slug: area.slug }));
@@ -59,9 +59,10 @@ export default async function AreaDetailPage({
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_380px]">
             <div>
               <div className="relative mb-8 aspect-[16/7] overflow-hidden rounded-2xl">
-                <Image
-                  src={getAreaImage(area.slug)}
-                  alt={area.name}
+                <ManagedImage
+                  slotKey={getAreaSlotKey(area.slug)}
+                  fallbackSrc={getAreaImage(area.slug)}
+                  fallbackAlt={area.name}
                   fill
                   priority
                   className="object-cover"

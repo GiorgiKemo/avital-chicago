@@ -68,6 +68,14 @@ export function getAreaImage(slug: string) {
   return areaImageMap[slug] || defaultLimoImage;
 }
 
+export function getServiceSlotKey(slug: string) {
+  return `service.${slug}`;
+}
+
+export function getAreaSlotKey(slug: string) {
+  return `area.${slug}`;
+}
+
 export function getBlogPostBySlug(slug: string) {
   return blogPosts.find((post) => post.slug === slug);
 }

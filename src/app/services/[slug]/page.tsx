@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { notFound } from "next/navigation";
+import ManagedImage from "@/components/ManagedImage";
 import QuoteForm from "@/components/QuoteForm";
-import { getServiceImage, services } from "@/lib/site-data";
+import { getServiceImage, getServiceSlotKey, services } from "@/lib/site-data";
 
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
@@ -55,9 +55,10 @@ export default async function ServiceDetailPage({
       </div>
 
       <section className="relative mb-12 min-h-[320px] overflow-hidden">
-        <Image
-          src={getServiceImage(service.slug)}
-          alt={service.name}
+        <ManagedImage
+          slotKey={getServiceSlotKey(service.slug)}
+          fallbackSrc={getServiceImage(service.slug)}
+          fallbackAlt={service.name}
           fill
           priority
           quality={95}

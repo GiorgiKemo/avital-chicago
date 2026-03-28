@@ -3,12 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Calendar } from "lucide-react";
 import { notFound } from "next/navigation";
+import ManagedImage from "@/components/ManagedImage";
 import QuoteForm from "@/components/QuoteForm";
 import {
   getLegacyAreaServiceBySlug,
   legacyAreaServices,
 } from "@/lib/legacy-area-services";
-import { blogPosts, getAreaImage } from "@/lib/site-data";
+import { blogPosts, getAreaImage, getAreaSlotKey } from "@/lib/site-data";
 
 export function generateStaticParams() {
   return legacyAreaServices.map((area) => ({ slug: area.slug }));
@@ -84,9 +85,10 @@ export default async function ServiceAreaDetailPage({
       </div>
 
       <section className="relative mb-12 min-h-[360px] overflow-hidden">
-        <Image
-          src={heroImage}
-          alt={areaService.areaName}
+        <ManagedImage
+          slotKey={getAreaSlotKey(areaService.slug)}
+          fallbackSrc={heroImage}
+          fallbackAlt={areaService.areaName}
           fill
           priority
           quality={95}

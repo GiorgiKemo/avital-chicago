@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check, Phone, Shield } from "lucide-react";
 import JsonLd from "@/components/JsonLd";
+import ManagedImage from "@/components/ManagedImage";
 import QuoteForm from "@/components/QuoteForm";
 import {
   kidsEventLinks,
@@ -49,9 +50,10 @@ export default function KidsPartyBusPage() {
       />
 
       <section className="relative overflow-hidden pb-14 pt-28">
-        <Image
-          src="/images/kids/KidsHome.webp"
-          alt="Kids party bus rental in Chicago"
+        <ManagedImage
+          slotKey="kids.hero"
+          fallbackSrc="/images/kids/KidsHome.webp"
+          fallbackAlt="Kids party bus rental in Chicago"
           fill
           priority
           className="object-cover"
@@ -171,9 +173,10 @@ export default function KidsPartyBusPage() {
             </div>
 
             <div className="image-hover-zoom relative aspect-[4/5] overflow-hidden rounded-3xl border border-border">
-              <Image
-                src="/images/kids/Test2.webp"
-                alt="Kids party bus interior"
+              <ManagedImage
+                slotKey="kids.interior"
+                fallbackSrc="/images/kids/Test2.webp"
+                fallbackAlt="Kids party bus interior"
                 fill
                 quality={95}
                 className="object-cover"
@@ -219,9 +222,10 @@ export default function KidsPartyBusPage() {
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(320px,420px)_minmax(0,1fr)] lg:items-center">
             <div className="image-hover-zoom relative aspect-[4/5] overflow-hidden rounded-3xl border border-border">
-              <Image
-                src="/images/kids/Test3.webp"
-                alt="Kids party bus event experience"
+              <ManagedImage
+                slotKey="kids.experience"
+                fallbackSrc="/images/kids/Test3.webp"
+                fallbackAlt="Kids party bus event experience"
                 fill
                 quality={95}
                 className="object-cover"

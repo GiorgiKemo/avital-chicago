@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, Phone, X } from "lucide-react";
+import ManagedImage from "@/components/ManagedImage";
 
 const navServices = [
   { slug: "wedding", name: "Wedding Packages" },
@@ -52,9 +52,10 @@ export default function Header() {
     >
       <div className="container mx-auto flex h-20 items-center justify-between px-6">
         <Link href="/" className="flex items-center" aria-label="Avital Chicago home">
-          <Image
-            src="/images/logos/logo.webp"
-            alt="Avital Chicago logo"
+          <ManagedImage
+            slotKey="site.logo.header"
+            fallbackSrc="/images/logos/logo.webp"
+            fallbackAlt="Avital Chicago logo"
             width={174}
             height={45}
             priority

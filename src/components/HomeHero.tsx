@@ -1,22 +1,25 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Calendar, Star, Users } from "lucide-react";
+import ManagedImage from "@/components/ManagedImage";
 
 const heroImages = [
   {
+    slotKey: "home.hero.1",
     src: "/images/hero/hero-limo.webp",
     alt: "White limousine at night in downtown Chicago",
     position: "center center",
   },
   {
+    slotKey: "home.hero.2",
     src: "/images/hero/partybus-interior.webp",
     alt: "Luxury party bus interior with purple lighting",
     position: "center center",
   },
   {
+    slotKey: "home.hero.3",
     src: "/images/hero/hero-partybus.webp",
     alt: "Black party bus in downtown Chicago at night",
     position: "center center",
@@ -63,9 +66,10 @@ export default function HomeHero() {
             transform: index !== heroIndex ? "scale(1)" : "scale(1.035)",
           }}
         >
-          <Image
-            src={image.src}
-            alt={image.alt}
+          <ManagedImage
+            slotKey={image.slotKey}
+            fallbackSrc={image.src}
+            fallbackAlt={image.alt}
             fill
             priority={index === 0}
             quality={95}

@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { applySupabaseCookies, updateSupabaseSession } from "@/lib/supabase/proxy";
 
 const exactRedirects = new Map<string, string>([
   ["/blog.php", "/blog"],
@@ -90,25 +91,40 @@ const legacyAreaSlugs = new Set([
   "waukegan",
 ]);
 
-function redirectTo(request: NextRequest, destination: string) {
-  return NextResponse.redirect(new URL(destination, request.url), 308);
+function redirectTo(
+  request: NextRequest,
+  destination: string,
+  supabaseResponse: NextResponse,
+) {
+  return applySupabaseCookies(
+    NextResponse.redirect(new URL(destination, request.url), 308),
+    supabaseResponse,
+  );
 }
 
-function rewriteTo(request: NextRequest, destination: string) {
-  return NextResponse.rewrite(new URL(destination, request.url));
+function rewriteTo(
+  request: NextRequest,
+  destination: string,
+  supabaseResponse: NextResponse,
+) {
+  return applySupabaseCookies(
+    NextResponse.rewrite(new URL(destination, request.url)),
+    supabaseResponse,
+  );
 }
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const supabaseResponse = await updateSupabaseSession(request);
 
   const exactDestination = exactRedirects.get(pathname);
   if (exactDestination) {
-    return redirectTo(request, exactDestination);
+    return redirectTo(request, exactDestination, supabaseResponse);
   }
 
   const legacyBlogMatch = pathname.match(/^\/blog\/(.+)\.php$/i);
   if (legacyBlogMatch) {
-    return redirectTo(request, `/blog/${legacyBlogMatch[1]}`);
+    return redirectTo(request, `/blog/${legacyBlogMatch[1]}`, supabaseResponse);
   }
 
   const legacyAreaMatch = pathname.match(
@@ -117,11 +133,11 @@ export function proxy(request: NextRequest) {
   if (legacyAreaMatch) {
     const areaSlug = legacyAreaMatch[1].toLowerCase();
     if (legacyAreaSlugs.has(areaSlug)) {
-      return rewriteTo(request, `/service-areas/${areaSlug}`);
+      return rewriteTo(request, `/service-areas/${areaSlug}`, supabaseResponse);
     }
   }
 
-  return NextResponse.next();
+  return supabaseResponse;
 }
 
 export const config = {

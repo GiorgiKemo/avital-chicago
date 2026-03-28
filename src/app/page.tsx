@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -11,10 +10,11 @@ import {
   Wrench,
 } from "lucide-react";
 import HomeHero from "@/components/HomeHero";
+import ManagedImage from "@/components/ManagedImage";
 import QuoteForm from "@/components/QuoteForm";
 import VehicleCard from "@/components/VehicleCard";
 import { limousines, partyBuses, services } from "@/lib/site-data";
-import { getServiceImage } from "@/lib/site-data";
+import { getServiceImage, getServiceSlotKey } from "@/lib/site-data";
 
 export default function HomePage() {
   return (
@@ -46,9 +46,10 @@ export default function HomePage() {
                 className="group relative h-[450px] overflow-hidden rounded-xl"
               >
                 <div className="image-hover-zoom absolute inset-0">
-                  <Image
-                    src={getServiceImage(service.slug)}
-                    alt={service.name}
+                  <ManagedImage
+                    slotKey={getServiceSlotKey(service.slug)}
+                    fallbackSrc={getServiceImage(service.slug)}
+                    fallbackAlt={service.name}
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 33vw"

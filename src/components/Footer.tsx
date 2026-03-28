@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
+import ManagedImage from "@/components/ManagedImage";
 
 const services = [
   { slug: "wedding", name: "Wedding Packages" },
@@ -23,9 +23,10 @@ export default function Footer() {
         <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <Link href="/" className="mb-4 inline-flex" aria-label="Avital Chicago home">
-              <Image
-                src="/images/logos/logo-footer.webp"
-                alt="Avital Chicago logo"
+              <ManagedImage
+                slotKey="site.logo.footer"
+                fallbackSrc="/images/logos/logo-footer.webp"
+                fallbackAlt="Avital Chicago logo"
                 width={207}
                 height={47}
                 className="h-auto w-[176px]"
