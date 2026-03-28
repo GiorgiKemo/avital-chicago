@@ -50,7 +50,7 @@ export default function KidsPartyBusPage() {
 
       <section className="relative overflow-hidden pb-14 pt-28">
         <Image
-          src="/images/kids/kidshome.webp"
+          src="/images/kids/KidsHome.png"
           alt="Kids party bus rental in Chicago"
           fill
           priority

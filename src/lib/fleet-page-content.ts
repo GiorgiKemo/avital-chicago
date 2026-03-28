@@ -66,8 +66,8 @@ export const partyBusFleetContent: FleetLandingContent = {
   metaTitle: "Chicago Party Bus Rental",
   metaDescription:
     "Browse Avital Chicago's party bus fleet, event coverage, pricing notes, FAQs, and real galleries for each party bus model.",
-  heroImage: "/images/party-car-in-limo.jpg",
-  heroAlt: "Chicago party bus rental fleet",
+  heroImage: "/images/gallery/chicago-edition/exterior/dsc_1936.jpg",
+  heroAlt: "Chicago party bus from the legacy Avital fleet",
   introParagraphs: [
     "Are you looking to hire a limo party bus in Chicago, or trying to understand the best rental prices in Chicagoland? You are in the right place.",
     "Our Chicago party bus service is built for birthdays, proms, weddings, bachelor and bachelorette parties, concerts, sports events, and nights out that need a bold arrival and a comfortable ride home.",
@@ -90,8 +90,8 @@ export const partyBusFleetContent: FleetLandingContent = {
   fleetDescription:
     "Our fleet ranges from compact sprinter-style party buses to large-capacity showpiece buses with lounge seating, custom bars, television screens, and event-ready lighting.",
   spotlightTitle: "Standout Party Bus Styles",
-  spotlightImage: "/images/whitecolorbuses.jpg",
-  spotlightAlt: "White Chicago party bus",
+  spotlightImage: "/images/gallery/white-pearl/exterior/01.webp",
+  spotlightAlt: "White Pearl party bus from the legacy Avital fleet",
   spotlightParagraphs: [
     "The old fleet page highlighted how different buses fit different moods and group sizes. That still holds true here: some buses are made for full-scale nightlife energy, while others are better for weddings, smaller guest lists, or more budget-conscious bookings.",
     "The Krystal, Miami, Versace, Lounge, Enclave, Venice, Martini, and Olympus lines were especially emphasized because they covered the broadest spread of capacity, lighting style, and price comfort.",
@@ -140,8 +140,8 @@ export const partyBusFleetContent: FleetLandingContent = {
     },
   ],
   pricingTitle: "Party Bus Rental Prices in Chicago",
-  pricingImage: "/images/whitecolorbuses.jpg",
-  pricingAlt: "Chicago party bus pricing",
+  pricingImage: "/images/gallery/krystal/exterior/01.webp",
+  pricingAlt: "Krystal party bus from the legacy Avital fleet",
   pricingParagraphs: [
     "Party bus pricing depends on how you plan to use the vehicle. The old site explained that the quote changes with timing, route shape, and vehicle size, and that is still the practical way to estimate it.",
     "Most bookings are priced hourly, with the exact total shaped by your pickup plan, passenger count, and how many stops or miles the itinerary needs.",
@@ -206,8 +206,8 @@ export const limoFleetContent: FleetLandingContent = {
   metaTitle: "Chicago Limousine Rental",
   metaDescription:
     "Explore Avital Chicago's limousine fleet with real limo galleries, event coverage, booking guidance, FAQs, and related planning content.",
-  heroImage: "/images/banner-car-white-limo.jpg",
-  heroAlt: "Chicago limousine rental services",
+  heroImage: "/images/gallery/cadillac-escalade/exterior/CADILLAC ESCALADE.jpg",
+  heroAlt: "Cadillac Escalade limousine from the legacy Avital fleet",
   introParagraphs: [
     "If you are looking for limo service in Chicago, our fleet covers everything from executive SUV limos to stretch models built for weddings, nightlife, and milestone celebrations.",
     "We are a Chicago limo service designed around premium vehicles, professional chauffeurs, and flexible booking based on route, passenger count, and the kind of experience you want for the day.",
@@ -230,8 +230,8 @@ export const limoFleetContent: FleetLandingContent = {
   fleetDescription:
     "The limo lineup focuses on stretch SUVs and executive-style limousines with strong interiors, clear capacity ranges, and enough variety to cover both intimate and larger bookings.",
   spotlightTitle: "Long Limos To Hire in Chicago Suburbs",
-  spotlightImage: "/images/whitecolorlimo.jpg",
-  spotlightAlt: "White Chicago stretch limo",
+  spotlightImage: "/images/gallery/hummer-h2-white-pearl/exterior/HUMMER H2 WHITE PEARL.png",
+  spotlightAlt: "White Hummer stretch limousine from the legacy Avital fleet",
   spotlightParagraphs: [
     "The old limo page centered the fleet around real capacity expectations, from the 14-passenger Lincoln Navigator to the 30-passenger Triple Axle Hummer H2.",
     "That same structure still matters when choosing the fleet: smaller limos fit tighter guest lists and more formal plans, while the larger Hummer and Escalade options work better for bigger wedding parties, prom groups, and nightlife bookings.",
