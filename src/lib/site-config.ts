@@ -36,7 +36,5 @@ export const publicIntegrations = {
   tidioPublicKey:
     process.env.NEXT_PUBLIC_TIDIO_PUBLIC_KEY ||
     "hkbemhej6tonjhl5fe127y8b6w0gvilb",
-  recaptchaSiteKey:
-    process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
-    "6LcJLKQUAAAAAMQdX19LtY7Eymbva3fNMfAqoVuo",
+  recaptchaSiteKey: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "",
 } as const;

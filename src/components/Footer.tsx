@@ -4,7 +4,7 @@ import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 
 const services = [
   { slug: "wedding", name: "Wedding Packages" },
-  { slug: "quinceanera", name: "Quinceanera" },
+  { slug: "quinceanera", name: "Quinceañera" },
   { slug: "night-parties", name: "Night Out Parties" },
   { slug: "prom", name: "Prom Night" },
   { slug: "bachelor-bachelorette", name: "Bachelor & Bachelorette" },

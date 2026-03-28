@@ -32,13 +32,12 @@ export async function POST(request: Request) {
 
   if (
     !process.env.NEXT_PUBLIC_SUPABASE_URL ||
-    !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
     !process.env.SUPABASE_SERVICE_ROLE_KEY
   ) {
     return NextResponse.json(
       {
         message:
-          "Quote backend is not configured yet. Please call (630) 550-6753 while we finish the Supabase setup.",
+          "Our quote system is temporarily unavailable. Please call (630) 550-6753 and we will help you right away.",
       },
       { status: 503 }
     );

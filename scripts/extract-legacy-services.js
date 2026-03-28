@@ -135,8 +135,27 @@ function repairMojibake(input) {
   return current;
 }
 
+function normalizeLegacyCopy(input) {
+  return input
+    .replace(/\bQuinceaneras\b/g, "Quinceañeras")
+    .replace(/\bQuinceanera\b/g, "Quinceañera")
+    .replace(/its[’']/g, "its")
+    .replace(/\bLICENCED\b/g, "LICENSED")
+    .replace(/\bCHOISE\b/g, "CHOICE")
+    .replace(/\bChicargy\b/g, "Chicago")
+    .replace(/got your covered/g, "got you covered")
+    .replace(/at it[’']s very finest/g, "at its very finest")
+    .replace(/at it[’']s finest/g, "at its finest")
+    .replace(/at it[’']s very best/g, "at its very best")
+    .replace(/make is special/g, "make it special")
+    .replace(/or should that be remember\?/g, "or should that be remembered?")
+    .replace(/<\/a>Avital\b/g, "</a> Avital");
+}
+
 function stripTags(input) {
-  return repairMojibake(decodeHtmlEntities(input.replace(/<[^>]+>/g, "")))
+  return normalizeLegacyCopy(
+    repairMojibake(decodeHtmlEntities(input.replace(/<[^>]+>/g, ""))),
+  )
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -229,13 +248,15 @@ function extractBalancedDiv(html, marker) {
 }
 
 function cleanLegacyHtml(contentHtml) {
-  return repairMojibake(
-    rewriteLegacyUrls(
-      contentHtml
-        .replace(/<script[\s\S]*?<\/script>/gi, "")
-        .replace(/<\?php[\s\S]*?\?>/g, "")
-        .replace(/\r/g, "")
-        .trim(),
+  return normalizeLegacyCopy(
+    repairMojibake(
+      rewriteLegacyUrls(
+        contentHtml
+          .replace(/<script[\s\S]*?<\/script>/gi, "")
+          .replace(/<\?php[\s\S]*?\?>/g, "")
+          .replace(/\r/g, "")
+          .trim(),
+      ),
     ),
   );
 }
@@ -256,7 +277,9 @@ function extractTitle(contentHtml, fallback) {
 
 function extractDescription(pageHtml) {
   const match = pageHtml.match(/<meta\s+name="description"\s+content="([^"]*)"/i);
-  return match ? decodeHtmlEntities(match[1]).replace(/\s+/g, " ").trim() : "";
+  return match
+    ? normalizeLegacyCopy(decodeHtmlEntities(match[1]).replace(/\s+/g, " ").trim())
+    : "";
 }
 
 function extractBannerImage(pageHtml, slug) {

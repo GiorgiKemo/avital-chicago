@@ -78,7 +78,7 @@ export const partyBusFleetContent: FleetLandingContent = {
     "Book a party bus for the occasions that matter most, from elegant celebrations to full-energy nights around Chicago and the suburbs.",
   useCaseLinks: [
     { label: "Weddings", href: "/services/wedding" },
-    { label: "Quinceaneras", href: "/services/quinceanera" },
+    { label: "Quinceañeras", href: "/services/quinceanera" },
     { label: "Night Parties", href: "/services/night-parties" },
     { label: "Prom", href: "/services/prom" },
     { label: "Birthdays", href: "/services/birthday" },
@@ -218,7 +218,7 @@ export const limoFleetContent: FleetLandingContent = {
     "Our limo fleet is used across formal events, nightlife, celebrations, and group outings that still want a refined, chauffeur-driven arrival.",
   useCaseLinks: [
     { label: "Night Parties", href: "/services/night-parties" },
-    { label: "Quinceaneras", href: "/services/quinceanera" },
+    { label: "Quinceañeras", href: "/services/quinceanera" },
     { label: "Prom", href: "/services/prom" },
     { label: "Bachelor & Bachelorette", href: "/services/bachelor-bachelorette" },
     { label: "Weddings", href: "/services/wedding" },

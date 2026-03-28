@@ -150,7 +150,7 @@ export default function HomePage() {
               <div className="grid grid-cols-2 gap-3">
                 {[
                   "Weddings",
-                  "Quinceaneras",
+                  "Quinceañeras",
                   "Night Parties",
                   "Prom",
                   "Concerts",

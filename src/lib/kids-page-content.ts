@@ -132,7 +132,7 @@ export const kidsPartyBusFleet = [
 ];
 
 export const kidsEventLinks = [
-  { label: "Quinceaneras", href: "/services/quinceanera" },
+  { label: "Quinceañeras", href: "/services/quinceanera" },
   { label: "Prom and School Dances", href: "/services/prom" },
   { label: "Birthday Parties", href: "/services/birthday" },
   { label: "Concerts and Sports Events", href: "/services/concerts-sports" },

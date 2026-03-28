@@ -15,7 +15,7 @@ const eventTypes = [
   "Bachelor(ette)",
   "Night Party",
   "Concerts",
-  "Quinceanera",
+  "Quinceañera",
   "Prom",
   "Birthday",
   "Other",

@@ -19,15 +19,4 @@ create table if not exists public.quote_submissions (
 alter table public.quote_submissions enable row level security;
 
 drop policy if exists "public can insert quote submissions" on public.quote_submissions;
-create policy "public can insert quote submissions"
-on public.quote_submissions
-for insert
-to anon, authenticated
-with check (true);
-
 drop policy if exists "authenticated users can read quote submissions" on public.quote_submissions;
-create policy "authenticated users can read quote submissions"
-on public.quote_submissions
-for select
-to authenticated
-using (true);

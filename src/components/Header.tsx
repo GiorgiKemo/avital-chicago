@@ -8,7 +8,7 @@ import { ChevronDown, Menu, Phone, X } from "lucide-react";
 
 const navServices = [
   { slug: "wedding", name: "Wedding Packages" },
-  { slug: "quinceanera", name: "Quinceanera" },
+  { slug: "quinceanera", name: "Quinceañera" },
   { slug: "night-parties", name: "Night Out Parties" },
   { slug: "prom", name: "Prom Night" },
   { slug: "bachelor-bachelorette", name: "Bachelor & Bachelorette" },
