@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import AdminGalleryManager from "@/components/admin/AdminGalleryManager";
 import {
   ADMIN_MEDIA_BUCKET,
   MAX_MEDIA_UPLOAD_BYTES,
@@ -58,6 +59,14 @@ function getStatusMessage(status?: string, error?: string) {
     return { tone: "success", text: "That image slot is back on its built-in default." };
   }
 
+  if (status === "gallery-saved") {
+    return { tone: "success", text: "That page gallery has been updated." };
+  }
+
+  if (status === "gallery-reset") {
+    return { tone: "success", text: "That page gallery is back on its built-in default." };
+  }
+
   if (!error) {
     return null;
   }
@@ -99,6 +108,11 @@ export default async function AdminMediaPage({
     .from("site_media_slots")
     .select("slot_key,bucket_path,alt_text,updated_at");
 
+  const { data: galleryRows } = await supabase
+    .from("site_media_galleries")
+    .select("page_key,position,bucket_path,alt_text,updated_at")
+    .order("position", { ascending: true });
+
   const slotAssignments = new Map(
     (slotRows ?? []).map((row) => [
       row.slot_key,
@@ -113,6 +127,30 @@ export default async function AdminMediaPage({
       },
     ]),
   );
+
+  const galleryAssignments = new Map<
+    string,
+    {
+      bucketPath: string;
+      altText: string;
+      updatedAt: string | null;
+      publicUrl: string;
+    }[]
+  >();
+
+  for (const row of galleryRows ?? []) {
+    if (!galleryAssignments.has(row.page_key)) {
+      galleryAssignments.set(row.page_key, []);
+    }
+
+    galleryAssignments.get(row.page_key)!.push({
+      bucketPath: row.bucket_path,
+      altText: row.alt_text || "",
+      updatedAt: row.updated_at,
+      publicUrl: supabase.storage.from(ADMIN_MEDIA_BUCKET).getPublicUrl(row.bucket_path).data
+        .publicUrl,
+    });
+  }
 
   const sectionMap = new Map<string, Map<string, PageSlotGroup>>();
 
@@ -557,6 +595,23 @@ export default async function AdminMediaPage({
                           );
                         })}
                       </div>
+
+                      {page.slots[0]?.page.supportsGallery ? (
+                        <div className="mt-6 border-t border-white/8 pt-6">
+                          <AdminGalleryManager
+                            pageKey={page.pageKey}
+                            pageLabel={page.pageLabel}
+                            pagePath={page.pagePath}
+                            description={page.slots[0].page.galleryDescription}
+                            defaultGalleryCount={page.slots[0].page.defaultGalleryCount}
+                            initialItems={galleryAssignments.get(page.pageKey) ?? []}
+                            files={files.map((file) => ({
+                              name: file.name,
+                              publicUrl: file.publicUrl,
+                            }))}
+                          />
+                        </div>
+                      ) : null}
                     </details>
                   ))}
                 </div>

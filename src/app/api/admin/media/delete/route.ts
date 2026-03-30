@@ -39,6 +39,32 @@ export async function POST(request: Request) {
     });
   }
 
+  const [{ data: slotUsage, error: slotError }, { data: galleryUsage, error: galleryError }] =
+    await Promise.all([
+      supabase
+        .from("site_media_slots")
+        .select("slot_key")
+        .eq("bucket_path", path)
+        .limit(1),
+      supabase
+        .from("site_media_galleries")
+        .select("page_key")
+        .eq("bucket_path", path)
+        .limit(1),
+    ]);
+
+  if (slotError || galleryError) {
+    return redirectWithMessage(request, {
+      error: slotError?.message || galleryError?.message || "Could not validate image usage.",
+    });
+  }
+
+  if ((slotUsage?.length ?? 0) > 0 || (galleryUsage?.length ?? 0) > 0) {
+    return redirectWithMessage(request, {
+      error: "That image is still in use on the website. Reset it from the page editor first.",
+    });
+  }
+
   const { error } = await supabase.storage.from(ADMIN_MEDIA_BUCKET).remove([path]);
 
   if (error) {

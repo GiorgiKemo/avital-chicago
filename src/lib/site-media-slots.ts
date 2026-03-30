@@ -5,6 +5,9 @@ export type SiteMediaPageDefinition = {
   label: string;
   path?: string;
   description?: string;
+  supportsGallery?: boolean;
+  galleryDescription?: string;
+  defaultGalleryCount?: number;
 };
 
 export type SiteMediaSlotDefinition = {
@@ -22,12 +25,17 @@ function createPage(
   label: string,
   path?: string,
   description?: string,
+  options?: Pick<
+    SiteMediaPageDefinition,
+    "supportsGallery" | "galleryDescription" | "defaultGalleryCount"
+  >,
 ): SiteMediaPageDefinition {
   return {
     key,
     label,
     path,
     description,
+    ...options,
   };
 }
 
@@ -35,8 +43,16 @@ function normalizePathToKey(path: string) {
   return path.replace(/^\//, "").replace(/\//g, ".");
 }
 
+export function getSiteMediaPageKey(path: string) {
+  return `page.${normalizePathToKey(path)}`;
+}
+
+export function getVehiclePageKey(basePath: string, slug: string) {
+  return getSiteMediaPageKey(`${basePath}/${slug}`);
+}
+
 export function getVehicleHeroSlotKey(basePath: string, slug: string) {
-  return `page.${normalizePathToKey(basePath)}.${slug}.hero`;
+  return `${getVehiclePageKey(basePath, slug)}.hero`;
 }
 
 const brandPage = createPage(
@@ -197,16 +213,23 @@ const vehicleHeroSlots: SiteMediaSlotDefinition[] = [
   })),
 ].map(({ vehicle, basePath, section, pageDescription }) => {
   const pagePath = `${basePath}/${vehicle.slug}`;
+  const defaultGalleryCount = vehicle.images.slice(1, 13).length;
 
   return {
     key: getVehicleHeroSlotKey(basePath, vehicle.slug),
     label: "Hero image",
     section,
     page: createPage(
-      `page.${normalizePathToKey(pagePath)}`,
+      getVehiclePageKey(basePath, vehicle.slug),
       vehicle.name,
       pagePath,
       pageDescription,
+      {
+        supportsGallery: true,
+        galleryDescription:
+          "Manage the gallery visitors see on this vehicle detail page. Hero image stays above; gallery images appear in the gallery section below.",
+        defaultGalleryCount,
+      },
     ),
     description:
       "This is the first big image visitors see when they open this vehicle page.",
@@ -344,8 +367,20 @@ export const siteMediaSlotMap = new Map(
   siteMediaSlots.map((slot) => [slot.key, slot]),
 );
 
+export const siteMediaPages = Array.from(
+  new Map(siteMediaSlots.map((slot) => [slot.page.key, slot.page])).values(),
+);
+
+export const siteMediaPageMap = new Map(
+  siteMediaPages.map((page) => [page.key, page]),
+);
+
 export function getSiteMediaSlotDefinition(slotKey: string) {
   return siteMediaSlotMap.get(slotKey) ?? null;
+}
+
+export function getSiteMediaPageDefinition(pageKey: string) {
+  return siteMediaPageMap.get(pageKey) ?? null;
 }
 
 export type SiteMediaSlotAssignment = {
@@ -353,5 +388,14 @@ export type SiteMediaSlotAssignment = {
   src: string;
   alt: string;
   bucketPath: string | null;
+  updatedAt: string | null;
+};
+
+export type SiteMediaGalleryAssignment = {
+  pageKey: string;
+  position: number;
+  src: string;
+  alt: string;
+  bucketPath: string;
   updatedAt: string | null;
 };

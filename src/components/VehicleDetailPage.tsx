@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -10,12 +9,13 @@ import {
   Video,
 } from "lucide-react";
 import JsonLd from "@/components/JsonLd";
+import ManagedGalleryGrid from "@/components/ManagedGalleryGrid";
 import ManagedImage from "@/components/ManagedImage";
 import QuoteForm from "@/components/QuoteForm";
 import VehicleCard from "@/components/VehicleCard";
 import { cleanLegacyList, cleanLegacyText } from "@/lib/clean-legacy-text";
 import { getLegacyVehicleDetail } from "@/lib/legacy-vehicle-details";
-import { getVehicleHeroSlotKey } from "@/lib/site-media-slots";
+import { getVehicleHeroSlotKey, getVehiclePageKey } from "@/lib/site-media-slots";
 import { buildBreadcrumbJsonLd } from "@/lib/structured-data";
 import type { Vehicle } from "@/types";
 
@@ -64,6 +64,7 @@ export default function VehicleDetailPage({
     legacyParagraphs.length > 0 ? legacyParagraphs : [vehicle.description];
   const featureHeading = cleanLegacyText(legacyDetail?.featureHeading);
   const useCases = vehicle.type === "party-bus" ? partyBusUseCases : limoUseCases;
+  const pageKey = getVehiclePageKey(basePath, vehicle.slug);
 
   return (
     <>
@@ -189,29 +190,11 @@ export default function VehicleDetailPage({
             </h2>
           </div>
 
-          {gallery.length > 0 ? (
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
-              {gallery.map((image, index) => (
-                <div
-                  key={`${image}-${index}`}
-                  className="image-hover-zoom relative aspect-[4/3] overflow-hidden rounded-2xl border border-border"
-                >
-                  <Image
-                    src={image}
-                    alt={`${vehicle.name} gallery ${index + 1}`}
-                    fill
-                    quality={95}
-                    className="object-cover"
-                    sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                  />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="glass-card p-8 text-muted-foreground">
-              More gallery images will be added here shortly.
-            </div>
-          )}
+          <ManagedGalleryGrid
+            pageKey={pageKey}
+            pageLabel={vehicle.name}
+            fallbackImages={gallery}
+          />
         </div>
       </section>
 
