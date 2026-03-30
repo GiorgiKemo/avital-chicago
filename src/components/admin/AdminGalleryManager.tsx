@@ -139,8 +139,8 @@ export default function AdminGalleryManager({
 
       {files.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-white/12 bg-black/10 p-4 text-sm text-muted-foreground">
-          Upload some images first, then come back here to build this page’s
-          gallery.
+          Upload some images first, then come back here to build the gallery for
+          this page.
         </div>
       ) : (
         <form action="/api/admin/site-media-gallery" method="post" className="space-y-5">
