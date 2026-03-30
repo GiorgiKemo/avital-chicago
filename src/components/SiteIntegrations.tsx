@@ -72,7 +72,7 @@ setTimeout(ldinsp, 0);
           <Script
             id="tidio-chat"
             src={`https://code.tidio.co/${publicIntegrations.tidioPublicKey}.js`}
-            strategy="lazyOnload"
+            strategy="afterInteractive"
           />
           <ChatLauncher />
         </>
