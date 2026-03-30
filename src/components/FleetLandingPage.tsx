@@ -49,7 +49,7 @@ export default function FleetLandingPage({
         ])}
       />
 
-      <section className="relative overflow-hidden pb-16 pt-28">
+      <section className="relative min-h-[100svh] overflow-hidden pb-8 pt-28 lg:flex lg:items-center lg:pb-6">
         <ManagedImage
           slotKey={`${fleetSlotPrefix}.hero`}
           fallbackSrc={content.heroImage}
@@ -63,8 +63,8 @@ export default function FleetLandingPage({
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/60" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
 
-        <div className="container relative z-10 mx-auto px-6">
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-end">
+        <div className="container relative z-10 mx-auto w-full px-6">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-center">
             <div className="max-w-4xl">
               <p className="pink-label mb-4">{content.label}</p>
               <h1 className="max-w-4xl font-serif text-5xl leading-none text-foreground md:text-7xl">

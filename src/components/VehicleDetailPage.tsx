@@ -77,8 +77,8 @@ export default function VehicleDetailPage({
         ])}
       />
 
-      <section className="relative overflow-hidden pb-12 pt-28">
-        <div className="container mx-auto px-6">
+      <section className="relative min-h-[100svh] overflow-hidden pb-8 pt-28 lg:flex lg:items-center lg:pb-6">
+        <div className="container mx-auto w-full px-6">
           <Link
             href={basePath}
             className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -86,7 +86,7 @@ export default function VehicleDetailPage({
             <ArrowLeft className="h-4 w-4" /> {backLabel}
           </Link>
 
-          <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start">
+          <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-center">
             <div>
               <p className="pink-label mb-4">{fleetLabel}</p>
               <h1 className="max-w-4xl font-serif text-5xl leading-none text-foreground md:text-7xl">
@@ -138,7 +138,7 @@ export default function VehicleDetailPage({
               </div>
             </div>
 
-            <div className="lg:pt-10">
+            <div className="lg:pt-0">
               <QuoteForm compact />
             </div>
           </div>

@@ -49,7 +49,7 @@ export default function KidsPartyBusPage() {
         ])}
       />
 
-      <section className="relative overflow-hidden pb-14 pt-28">
+      <section className="relative min-h-[100svh] overflow-hidden pb-8 pt-28 lg:flex lg:items-center lg:pb-6">
         <ManagedImage
           slotKey="kids.hero"
           fallbackSrc="/images/Kids%20Party%20Bus%20image-101.webp"
@@ -62,8 +62,8 @@ export default function KidsPartyBusPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background/96 via-background/82 to-background/50" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/25 to-transparent" />
-        <div className="container relative z-10 mx-auto px-6 py-16 md:py-20">
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-end">
+        <div className="container relative z-10 mx-auto w-full px-6 py-12 md:py-16 lg:py-8">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-center">
             <div>
               <p className="pink-label mb-4">Kids Party Bus</p>
               <h1 className="max-w-4xl font-serif text-5xl leading-none text-foreground md:text-7xl">
