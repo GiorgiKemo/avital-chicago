@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import AdminLoginForm from "@/components/admin/AdminLoginForm";
 import {
   getAdminDisabledReason,
+  isAdminBypassEnabled,
   getAdminSession,
   getSafeNextPath,
 } from "@/lib/admin-auth";
@@ -31,6 +32,11 @@ export default async function AdminLoginPage({
   const params = await searchParams;
   const nextPath = getSafeNextPath(params.next);
   const disabledReason = getAdminDisabledReason();
+
+  if (isAdminBypassEnabled()) {
+    redirect(nextPath);
+  }
+
   const { user, isAdmin } = await getAdminSession();
 
   if (user && isAdmin) {
