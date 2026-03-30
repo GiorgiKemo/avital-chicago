@@ -33,7 +33,7 @@ export const publicIntegrations = {
     process.env.NEXT_PUBLIC_GOOGLE_ADS_QUOTE_CONVERSION_LABEL ||
     "AW-1018838931/iDn9CNWR7GYQk__o5QM",
   inspectletWid: process.env.NEXT_PUBLIC_INSPECTLET_WID || "1442288751",
-  tidioEnabled: process.env.NEXT_PUBLIC_ENABLE_TIDIO === "true",
+  tidioEnabled: process.env.NEXT_PUBLIC_ENABLE_TIDIO !== "false",
   tidioPublicKey:
     process.env.NEXT_PUBLIC_TIDIO_PUBLIC_KEY ||
     "hkbemhej6tonjhl5fe127y8b6w0gvilb",
