@@ -80,8 +80,8 @@ export default function ContactPage() {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-            <div className="glass-card h-[400px] overflow-hidden rounded-xl">
+          <div className="flex flex-col gap-12 lg:flex-row lg:items-stretch">
+            <div className="glass-card h-[400px] overflow-hidden rounded-xl lg:h-auto lg:flex-1">
               <iframe
                 src="https://www.google.com/maps?q=1431+Harmony+Ct,+Itasca,+IL+60143&z=14&output=embed"
                 width="100%"
@@ -93,7 +93,7 @@ export default function ContactPage() {
               />
             </div>
 
-            <QuoteForm />
+            <QuoteForm className="lg:flex-1" />
           </div>
         </div>
       </section>
