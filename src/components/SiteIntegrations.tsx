@@ -1,5 +1,4 @@
 import Script from "next/script";
-import ChatLauncher from "@/components/ChatLauncher";
 import { publicIntegrations } from "@/lib/site-config";
 
 export default function SiteIntegrations() {
@@ -68,14 +67,11 @@ setTimeout(ldinsp, 0);
       </Script>
 
       {publicIntegrations.tidioEnabled ? (
-        <>
-          <Script
-            id="tidio-chat"
-            src={`https://code.tidio.co/${publicIntegrations.tidioPublicKey}.js`}
-            strategy="afterInteractive"
-          />
-          <ChatLauncher />
-        </>
+        <Script
+          id="tidio-chat"
+          src={`https://code.tidio.co/${publicIntegrations.tidioPublicKey}.js`}
+          strategy="afterInteractive"
+        />
       ) : null}
     </>
   );
