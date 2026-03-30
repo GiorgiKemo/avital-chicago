@@ -127,7 +127,7 @@ export default function FleetLandingPage({
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
                 {content.useCaseLinks.map((link) => (
                   <Link
-                    key={link.href}
+                    key={`${link.href}-${link.label}`}
                     href={link.href}
                     className="flex items-center gap-3 rounded-2xl border border-border bg-card/20 px-4 py-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
                   >
