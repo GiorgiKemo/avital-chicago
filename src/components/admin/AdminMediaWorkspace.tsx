@@ -65,6 +65,8 @@ type AdminMediaWorkspaceProps = {
   slotAssignments: Record<string, SlotAssignmentPreview>;
   galleryAssignments: Record<string, GalleryAssignmentPreview[]>;
   initialSelectedPageKey: string;
+  initialSelectedSlotKey: string;
+  initialUploadedName: string;
 };
 
 function formatBytes(bytes?: number) {
@@ -104,6 +106,8 @@ export default function AdminMediaWorkspace({
   slotAssignments,
   galleryAssignments,
   initialSelectedPageKey,
+  initialSelectedSlotKey,
+  initialUploadedName,
 }: AdminMediaWorkspaceProps) {
   const allPages = useMemo(
     () => pageSections.flatMap((section) => section.pages),
@@ -120,7 +124,10 @@ export default function AdminMediaWorkspace({
   const sectionNames = pageSections.map((section) => section.sectionName);
   const initialPage =
     allPages.find((page) => page.pageKey === initialSelectedPageKey) ?? allPages[0] ?? null;
-  const initialSlot = initialPage?.slots[0] ?? null;
+  const initialSlot =
+    initialPage?.slots.find((slot) => slot.key === initialSelectedSlotKey) ??
+    initialPage?.slots[0] ??
+    null;
   const initialAssignment = initialSlot ? slotAssignments[initialSlot.key] : null;
 
   const [activeSectionName, setActiveSectionName] = useState(initialSectionName);
@@ -130,7 +137,9 @@ export default function AdminMediaWorkspace({
   const [selectedSlotKey, setSelectedSlotKey] = useState(initialSlot?.key ?? "");
   const [assetTab, setAssetTab] = useState<"library" | "upload">("library");
   const [selectedUploadName, setSelectedUploadName] = useState("");
-  const [draftBucketPath, setDraftBucketPath] = useState(initialAssignment?.bucketPath ?? "");
+  const [draftBucketPath, setDraftBucketPath] = useState(
+    initialUploadedName || initialAssignment?.bucketPath || "",
+  );
   const [draftAltText, setDraftAltText] = useState(
     initialAssignment?.altText ?? initialSlot?.defaultAlt ?? "",
   );
@@ -171,14 +180,18 @@ export default function AdminMediaWorkspace({
   }, [assetQuery, files]);
 
   const featuredFiles = filteredFiles.slice(0, 12);
+  const currentAssignment = slotAssignments[selectedSlot?.key ?? ""] ?? null;
+  const currentBucketPath = currentAssignment?.bucketPath ?? "";
   const selectedFile = files.find((file) => file.name === draftBucketPath) ?? null;
-  const previewSrc =
-    selectedFile?.publicUrl ||
-    slotAssignments[selectedSlot?.key ?? ""]?.publicUrl ||
-    selectedSlot?.defaultSrc ||
-    "";
-  const previewAlt = draftAltText || selectedSlot?.defaultAlt || "Image preview";
-  const isCustom = Boolean(slotAssignments[selectedSlot?.key ?? ""]?.bucketPath);
+  const currentLiveSrc = currentAssignment?.publicUrl || selectedSlot?.defaultSrc || "";
+  const currentLiveAlt =
+    currentAssignment?.altText || selectedSlot?.defaultAlt || "Image preview";
+  const pendingSrc = selectedFile?.publicUrl || selectedSlot?.defaultSrc || "";
+  const pendingAlt = draftAltText || selectedSlot?.defaultAlt || "Image preview";
+  const pendingMatchesLive =
+    (draftBucketPath || "") === (currentBucketPath || "") &&
+    pendingAlt === currentLiveAlt;
+  const isCustom = Boolean(currentBucketPath);
 
   const totalOverrides = Object.values(slotAssignments).filter(
     (assignment) => assignment.bucketPath,
@@ -458,12 +471,50 @@ export default function AdminMediaWorkspace({
                       </p>
                     </div>
 
-                    <div className="grid gap-0 xl:grid-cols-[minmax(0,1fr)_320px]">
+                    <div className="grid gap-0 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_320px]">
                       <div className="border-b border-white/8 bg-black/20 xl:border-b-0 xl:border-r">
+                        <div className="border-b border-white/8 px-5 py-4">
+                          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                            Live on site
+                          </p>
+                          <p className="mt-1 text-sm text-foreground">
+                            {currentBucketPath || "Built-in default image"}
+                          </p>
+                        </div>
                         <div className="aspect-[16/10] overflow-hidden">
                           <AdminPreviewImage
-                            src={previewSrc}
-                            alt={previewAlt}
+                            src={currentLiveSrc}
+                            alt={currentLiveAlt}
+                            className="h-full w-full object-cover"
+                            fallbackLabel="Preview unavailable"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="border-b border-white/8 bg-black/10 xl:border-b-0 xl:border-r">
+                        <div className="border-b border-white/8 px-5 py-4">
+                          <div className="flex items-center gap-2">
+                            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                              Selected replacement
+                            </p>
+                            <span
+                              className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] ${
+                                pendingMatchesLive
+                                  ? "bg-white/8 text-muted-foreground"
+                                  : "bg-primary/15 text-primary"
+                              }`}
+                            >
+                              {pendingMatchesLive ? "No draft change" : "Not live yet"}
+                            </span>
+                          </div>
+                          <p className="mt-1 text-sm text-foreground">
+                            {draftBucketPath || "Built-in default image"}
+                          </p>
+                        </div>
+                        <div className="aspect-[16/10] overflow-hidden">
+                          <AdminPreviewImage
+                            src={pendingSrc}
+                            alt={pendingAlt}
                             className="h-full w-full object-cover"
                             fallbackLabel="Preview unavailable"
                           />
@@ -473,10 +524,11 @@ export default function AdminMediaWorkspace({
                       <div className="space-y-4 p-6">
                         <div className="rounded-2xl border border-white/8 bg-black/15 p-4">
                           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                            Current source
+                            What happens next
                           </p>
                           <p className="mt-2 text-sm text-foreground">
-                            {selectedFile ? selectedFile.name : "Built-in default image"}
+                            Uploading a file only adds it to the library. The live page
+                            does not change until you click the pink action button.
                           </p>
                           <p className="mt-2 text-xs text-muted-foreground">
                             Slot key: <code>{selectedSlot.key}</code>
@@ -491,10 +543,20 @@ export default function AdminMediaWorkspace({
                             {createSaveLabel(selectedSlot.label)}
                           </h4>
                           <p className="mt-2 text-sm text-muted-foreground">
-                            Choose an uploaded file or upload a fresh one, then apply it
-                            directly to this slot.
+                            Pick an uploaded file or use the default again, then publish
+                            the change only when you are happy with the replacement.
                           </p>
                         </div>
+
+                        {!pendingMatchesLive ? (
+                          <div className="rounded-2xl border border-primary/20 bg-primary/10 p-4 text-sm text-white/90">
+                            You have a draft replacement selected. Click{" "}
+                            <span className="font-semibold">
+                              {createSaveLabel(selectedSlot.label)}
+                            </span>{" "}
+                            to make it live.
+                          </div>
+                        ) : null}
                       </div>
                     </div>
                   </div>
@@ -555,8 +617,13 @@ export default function AdminMediaWorkspace({
                                 : "border-white/8 bg-black/10 hover:border-white/16"
                             }`}
                           >
-                            <div className="flex aspect-[4/3] items-center justify-center rounded-[18px] border border-dashed border-white/12 bg-black/15 text-center text-xs uppercase tracking-[0.18em] text-muted-foreground">
-                              Use built-in default
+                            <div className="overflow-hidden rounded-[18px] bg-black/15">
+                              <AdminPreviewImage
+                                src={selectedSlot.defaultSrc}
+                                alt={selectedSlot.defaultAlt}
+                                className="aspect-[4/3] h-full w-full object-cover"
+                                fallbackLabel="Default preview"
+                              />
                             </div>
                             <div className="mt-3 flex items-center justify-between gap-3">
                               <div>
@@ -655,6 +722,11 @@ export default function AdminMediaWorkspace({
                             name="returnPageKey"
                             value={selectedPage.pageKey}
                           />
+                          <input
+                            type="hidden"
+                            name="returnSlotKey"
+                            value={selectedSlot.key}
+                          />
 
                           <label className="block rounded-[28px] border border-dashed border-primary/35 bg-primary/[0.05] p-8 text-center transition hover:border-primary/55 hover:bg-primary/[0.08]">
                             <input
@@ -752,7 +824,7 @@ export default function AdminMediaWorkspace({
                           Pending source
                         </p>
                         <p className="mt-2 text-foreground">
-                          {selectedFile ? selectedFile.name : "Built-in default image"}
+                          {draftBucketPath || "Built-in default image"}
                         </p>
                       </div>
 

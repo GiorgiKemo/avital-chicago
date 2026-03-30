@@ -17,7 +17,9 @@ type AdminMediaPageProps = {
   searchParams: Promise<{
     error?: string;
     page?: string;
+    slot?: string;
     status?: string;
+    uploaded?: string;
   }>;
 };
 
@@ -36,9 +38,14 @@ function formatBytes(bytes: number) {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-function getStatusMessage(status?: string, error?: string) {
+function getStatusMessage(status?: string, error?: string, uploaded?: string) {
   if (status === "uploaded") {
-    return { tone: "success", text: "Image uploaded successfully." };
+    return {
+      tone: "success",
+      text: uploaded
+        ? `Image uploaded successfully. "${uploaded}" is ready to apply.`
+        : "Image uploaded successfully.",
+    };
   }
 
   if (status === "deleted") {
@@ -182,7 +189,11 @@ export default async function AdminMediaPage({
   return (
     <AdminMediaWorkspace
       userEmail={user.email || ""}
-      feedback={getStatusMessage(params.status, params.error || error?.message)}
+      feedback={getStatusMessage(
+        params.status,
+        params.error || error?.message,
+        params.uploaded,
+      )}
       bucketName={ADMIN_MEDIA_BUCKET}
       acceptedFormatsText={MEDIA_ACCEPT.join(", ")}
       maxUploadSizeText={formatBytes(MAX_MEDIA_UPLOAD_BYTES)}
@@ -191,6 +202,8 @@ export default async function AdminMediaPage({
       slotAssignments={slotAssignments}
       galleryAssignments={galleryAssignments}
       initialSelectedPageKey={initialSelectedPageKey}
+      initialSelectedSlotKey={params.slot || ""}
+      initialUploadedName={params.uploaded || ""}
     />
   );
 }
