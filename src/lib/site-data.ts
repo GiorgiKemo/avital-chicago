@@ -26,7 +26,7 @@ export const services = baseServices.map((service) => ({
   ...legacyServicesBySlug.get(service.slug),
 }));
 
-const serviceImageMap: Record<string, string> = {
+const homepageServiceCardImageMap: Record<string, string> = {
   wedding: "/images/gallery/cadillac-escalade/exterior/01.webp",
   quinceanera: "/images/gallery/hummer-h2-triple-axle/exterior/01.webp",
   "night-parties": "/images/gallery/tiffany-miami/interior/dsc03542-min.webp",
@@ -37,6 +37,18 @@ const serviceImageMap: Record<string, string> = {
   birthday: "/images/gallery/tiffany-miami/interior/dsc03542-min.webp",
   graduation: "/images/gallery/lincoln-navigator/exterior/01.webp",
   "kids-party-bus": defaultPartyBusImage,
+};
+
+const serviceImageMap: Record<string, string> = {
+  wedding: "/images/cars-limo-107.webp",
+  quinceanera: "/images/images-1010.webp",
+  "night-parties": "/images/limo-car-images-1001.webp",
+  prom: "/images/images-2020.webp",
+  "bachelor-bachelorette": "/images/image%20(3).webp",
+  "concerts-sports": "/images/limo-car-images-1005.webp",
+  birthday: "/images/limo-car-images-1003.webp",
+  graduation: "/images/gallery/lincoln-navigator/exterior/01.webp",
+  "kids-party-bus": "/images/Kids%20Party%20Bus%20image-101.webp",
 };
 
 const areaImageMap: Record<string, string> = {
@@ -62,6 +74,10 @@ const areaImageMap: Record<string, string> = {
 
 export function getServiceImage(slug: string) {
   return serviceImageMap[slug] || defaultServiceImage;
+}
+
+export function getHomepageServiceCardImage(slug: string) {
+  return homepageServiceCardImageMap[slug] || defaultServiceImage;
 }
 
 export function getAreaImage(slug: string) {

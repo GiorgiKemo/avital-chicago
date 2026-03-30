@@ -2,6 +2,44 @@ import type { Vehicle, Service, Area } from "@/types";
 import manifest from "../../public/images/image-manifest.json";
 
 const imageManifest = manifest as Record<string, { interior: string[]; exterior: string[] }>;
+const legacyFleetCardImages: Partial<Record<string, string>> = {
+  diamond: "/images/gallery/pb/diamond-edition.webp",
+  "tiffany-miami": "/images/gallery/pb/miami-edition.webp",
+  "vision-venice": "/images/gallery/pb/venice-edition.webp",
+  gatsby: "/images/gallery/pb/gatsby-edition.webp",
+  hawaii: "/images/gallery/pb/hawaii-edition.webp",
+  "mercedes-sprinter": "/images/gallery/pb/pic-3.webp",
+  enclave: "/images/gallery/pb/enclave-edition.webp",
+  encore: "/images/gallery/pb/encore-edition.webp",
+  epic: "/images/gallery/pb/epic-edition.webp",
+  escape: "/images/gallery/pb/escape-edition.webp",
+  exhibit: "/images/gallery/pb/exhibit.webp",
+  fantasy: "/images/gallery/pb/Fantasy%20Party%20Bus.webp",
+  "fashion-versace": "/images/gallery/pb/versace-edition.webp",
+  krystal: "/images/gallery/pb/krystal-edition.webp",
+  olympus: "/images/gallery/pb/olympus-edition.webp",
+  vip: "/images/gallery/pb/vipedition1.webp",
+  martini: "/images/gallery/pb/martini-edition.webp",
+  "mercedes-charter": "/images/gallery/pb/Sprinter-Charter.webp",
+  "cadillac-escalade":
+    "/images/gallery/cadilac-escalade-exterior/cadillac-escalade.webp",
+  "hummer-h2-white-pearl":
+    "/images/gallery/hummer-h2-white-pearl-exterior/hummer-h2-white-pearl.webp",
+  "hummer-h2-double-axle":
+    "/images/gallery/double-axle-hummer-h2-exterior/hummer-h2-double-axle.webp",
+  "hummer-h2-triple-axle":
+    "/images/gallery/triple-axle-hummer-h2-exterior/hummer-h2-triple-axle.webp",
+  "infiniti-qx56": "/images/gallery/infiniti-qx56-exterior/infiniti.webp",
+  "lincoln-navigator":
+    "/images/gallery/lincoln-navigator-exterior/lincoln-navigator.webp",
+};
+
+function withLegacyCardImage(vehicle: Vehicle): Vehicle {
+  return {
+    ...vehicle,
+    cardImage: legacyFleetCardImages[vehicle.slug] ?? vehicle.cardImage,
+  };
+}
 
 function getVehicleImages(slug: string): string[] {
   const entry = imageManifest[slug];
@@ -33,7 +71,7 @@ export const partyBuses: Vehicle[] = [
   { slug: "white-pearl", name: "White Pearl", type: "party-bus", passengers: 34, tagline: "Pure elegance on wheels", description: "The White Pearl party bus radiates sophistication with its pristine white exterior and luxurious interior. A stunning choice for weddings and upscale events.", features: ["LED Lighting", "Premium Sound System", "Bar Area", "Leather Seating", "Flat Screen TVs", "Dancing Poles", "Pearl White Interior", "Climate Control"], images: getVehicleImages("white-pearl") },
   { slug: "lounge", name: "Lounge", type: "party-bus", passengers: 30, tagline: "Relax in luxury", description: "The Lounge edition offers a relaxed yet luxurious atmosphere. Designed for those who want to enjoy the ride as much as the destination.", features: ["LED Lighting", "Premium Sound System", "Bar Area", "Plush Seating", "Flat Screen TVs", "Lounge Layout", "Fiber Optic Ceiling", "Climate Control"], images: getVehicleImages("lounge") },
   { slug: "chicago-edition", name: "Chicago Edition", type: "party-bus", passengers: 36, tagline: "Chicago pride on wheels", description: "Our signature Chicago Edition party bus celebrates the spirit of the Windy City. Custom Chicago-themed interior with all the premium amenities.", features: ["LED Lighting", "Premium Sound System", "Bar Area", "Leather Seating", "Flat Screen TVs", "Dancing Poles", "Chicago-Themed Design", "Climate Control"], images: getVehicleImages("chicago-edition") },
-];
+].map((vehicle): Vehicle => withLegacyCardImage(vehicle as Vehicle));
 
 // ===== LIMOUSINES =====
 export const limousines: Vehicle[] = [
@@ -43,12 +81,12 @@ export const limousines: Vehicle[] = [
   { slug: "hummer-h2-triple-axle", name: "Hummer H2 Triple Axle", type: "limo", passengers: 30, tagline: "The ultimate Hummer experience", description: "Our Triple Axle Hummer H2 is the most impressive limousine in our fleet. Accommodating up to 30 passengers, it provides unmatched luxury.", features: ["LED Lighting", "Premium Sound System", "Multiple Bar Areas", "Leather Seating", "Flat Screen TVs", "Dancing Poles", "VIP Section", "Full Laser Show"], images: getVehicleImages("hummer-h2-triple-axle") },
   { slug: "infiniti-qx56", name: "Infiniti QX56", type: "limo", passengers: 20, tagline: "Japanese precision, American luxury", description: "The Infiniti QX56 limousine blends sophisticated Japanese engineering with premium luxury features. A refined choice for up to 20 passengers.", features: ["LED Lighting", "Premium Sound System", "Bar Area", "Leather Seating", "Flat Screen TVs", "Fiber Optic Ceiling", "Climate Control", "Privacy Glass"], images: getVehicleImages("infiniti-qx56") },
   { slug: "lincoln-navigator", name: "Lincoln Navigator", type: "limo", passengers: 14, tagline: "Classic elegance personified", description: "The Lincoln Navigator limousine is the epitome of classic American elegance. Perfect for intimate gatherings of up to 14 guests.", features: ["LED Lighting", "Premium Sound System", "Bar Area", "Leather Seating", "Flat Screen TV", "Fiber Optic Ceiling", "Climate Control", "Red Carpet Service"], images: getVehicleImages("lincoln-navigator") },
-];
+].map((vehicle): Vehicle => withLegacyCardImage(vehicle as Vehicle));
 
 // ===== SHUTTLE =====
-export const shuttleBus: Vehicle = {
+export const shuttleBus: Vehicle = withLegacyCardImage({
   slug: "shuttle-bus", name: "Shuttle Bus", type: "shuttle", passengers: 40, tagline: "Group transportation made easy", description: "Our Shuttle Bus is the perfect solution for large group transportation. Ideal for corporate events, weddings, and group outings.", features: ["Comfortable Seating", "Climate Control", "PA System", "Luggage Storage", "USB Charging", "Professional Driver"], images: getVehicleImages("shuttle-bus"),
-};
+});
 
 export const allVehicles: Vehicle[] = [...partyBuses, ...limousines, shuttleBus];
 

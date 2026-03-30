@@ -155,7 +155,12 @@ export default function FleetLandingPage({
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             {vehicles.map((vehicle) => (
-              <VehicleCard key={vehicle.slug} vehicle={vehicle} basePath={basePath} />
+              <VehicleCard
+                key={vehicle.slug}
+                vehicle={vehicle}
+                basePath={basePath}
+                preferLegacyCardImage
+              />
             ))}
           </div>
         </div>

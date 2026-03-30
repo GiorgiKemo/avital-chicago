@@ -8,10 +8,16 @@ import type { Vehicle } from "@/types";
 interface VehicleCardProps {
   vehicle: Vehicle;
   basePath: string;
+  preferLegacyCardImage?: boolean;
 }
 
-const VehicleCard = ({ vehicle, basePath }: VehicleCardProps) => {
+const VehicleCard = ({
+  vehicle,
+  basePath,
+  preferLegacyCardImage = false,
+}: VehicleCardProps) => {
   const thumbnail =
+    (preferLegacyCardImage ? vehicle.cardImage : undefined) ||
     vehicle.images[0] || "/images/gallery/hummer-h2-triple-axle/exterior/01.webp";
 
   return (

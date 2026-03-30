@@ -7,6 +7,7 @@ export interface Vehicle {
   description: string;
   features: string[];
   images: string[];
+  cardImage?: string;
   youtubeId?: string;
 }
 

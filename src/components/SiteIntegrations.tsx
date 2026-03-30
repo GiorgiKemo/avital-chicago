@@ -66,11 +66,13 @@ setTimeout(ldinsp, 0);
 })();`}
       </Script>
 
-      <Script
-        id="tidio-chat"
-        src={`https://code.tidio.co/${publicIntegrations.tidioPublicKey}.js`}
-        strategy="lazyOnload"
-      />
+      {publicIntegrations.tidioEnabled ? (
+        <Script
+          id="tidio-chat"
+          src={`https://code.tidio.co/${publicIntegrations.tidioPublicKey}.js`}
+          strategy="lazyOnload"
+        />
+      ) : null}
     </>
   );
 }

@@ -103,20 +103,33 @@ export default function QuoteForm({
     }
   };
 
-  const inputClass =
-    "w-full rounded-lg border border-border bg-muted/30 px-4 py-3 text-sm text-foreground transition-all placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none focus:ring-1 focus:ring-primary/20";
+  const inputClass = `w-full rounded-lg border border-border bg-muted/30 text-sm text-foreground transition-all placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none focus:ring-1 focus:ring-primary/20 ${
+    compact ? "px-3.5 py-2.5" : "px-4 py-3"
+  }`;
   const selectClass = `${inputClass} appearance-none`;
+  const pairGridClass = compact
+    ? "grid grid-cols-2 gap-2.5"
+    : "grid grid-cols-1 gap-3 sm:grid-cols-2";
 
   return (
-    <div className={`glass-card-glow p-6 md:p-8 ${className}`}>
-      <h3 className="mb-1 font-serif text-2xl font-semibold text-foreground">
+    <div
+      className={`glass-card-glow ${compact ? "p-5 md:p-6" : "p-6 md:p-8"} ${className}`}
+    >
+      <h3
+        className={`font-serif font-semibold text-foreground ${
+          compact ? "mb-1 text-[1.85rem] leading-tight" : "mb-1 text-2xl"
+        }`}
+      >
         Get a Free Quote
       </h3>
-      <p className="mb-6 text-sm text-muted-foreground">
+      <p className={`text-sm text-muted-foreground ${compact ? "mb-4" : "mb-6"}`}>
         Fill in your details and we&apos;ll get back to you shortly.
       </p>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+      <form
+        onSubmit={handleSubmit}
+        className={`flex flex-col ${compact ? "gap-2.5" : "gap-3"}`}
+      >
         <input
           type="text"
           placeholder="Full Name *"
@@ -126,11 +139,7 @@ export default function QuoteForm({
           required
         />
 
-        <div
-          className={`grid gap-3 ${
-            compact ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2"
-          }`}
-        >
+        <div className={pairGridClass}>
           <input
             type="email"
             placeholder="Email *"
@@ -149,11 +158,7 @@ export default function QuoteForm({
           />
         </div>
 
-        <div
-          className={`grid gap-3 ${
-            compact ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2"
-          }`}
-        >
+        <div className={pairGridClass}>
           <input
             type="text"
             placeholder="Pick up Location *"
@@ -172,11 +177,7 @@ export default function QuoteForm({
           />
         </div>
 
-        <div
-          className={`grid gap-3 ${
-            compact ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2"
-          }`}
-        >
+        <div className={pairGridClass}>
           <input
             type="number"
             placeholder="# Passengers *"
@@ -208,7 +209,7 @@ export default function QuoteForm({
           ))}
         </select>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className={pairGridClass}>
           <select
             value={form.serviceType}
             onChange={(event) => update("serviceType", event.target.value)}
@@ -240,7 +241,7 @@ export default function QuoteForm({
         <button
           type="submit"
           disabled={loading}
-          className="btn-primary mt-2 w-full justify-center disabled:opacity-50"
+          className={`btn-primary w-full justify-center disabled:opacity-50 ${compact ? "mt-1" : "mt-2"}`}
         >
           {loading ? "Submitting..." : "Request Quote"}{" "}
           <ArrowRight className="h-4 w-4" />

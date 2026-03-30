@@ -52,7 +52,7 @@ export default function KidsPartyBusPage() {
       <section className="relative overflow-hidden pb-14 pt-28">
         <ManagedImage
           slotKey="kids.hero"
-          fallbackSrc="/images/kids/kidshome.webp"
+          fallbackSrc="/images/Kids%20Party%20Bus%20image-101.webp"
           fallbackAlt="Kids party bus rental in Chicago"
           fill
           priority
@@ -175,7 +175,7 @@ export default function KidsPartyBusPage() {
             <div className="image-hover-zoom relative aspect-[4/5] overflow-hidden rounded-3xl border border-border">
               <ManagedImage
                 slotKey="kids.interior"
-                fallbackSrc="/images/kids/test2.webp"
+                fallbackSrc="/images/Kids%20Party%20Bus%20image-102.webp"
                 fallbackAlt="Kids party bus interior"
                 fill
                 quality={95}
@@ -224,7 +224,7 @@ export default function KidsPartyBusPage() {
             <div className="image-hover-zoom relative aspect-[4/5] overflow-hidden rounded-3xl border border-border">
               <ManagedImage
                 slotKey="kids.experience"
-                fallbackSrc="/images/kids/Test3.webp"
+                fallbackSrc="/images/Kids%20Party%20Bus%20image-103.webp"
                 fallbackAlt="Kids party bus event experience"
                 fill
                 quality={95}
