@@ -29,12 +29,12 @@ export const services = baseServices.map((service) => ({
 const serviceImageMap: Record<string, string> = {
   wedding: "/images/gallery/cadillac-escalade/exterior/01.webp",
   quinceanera: "/images/gallery/hummer-h2-triple-axle/exterior/01.webp",
-  "night-parties": "/images/gallery/tiffany-miami/interior/DSC03542-min.webp",
+  "night-parties": "/images/gallery/tiffany-miami/interior/dsc03542-min.webp",
   prom: "/images/gallery/lincoln-navigator/exterior/01.webp",
   "bachelor-bachelorette":
-    "/images/gallery/diamond/interior/DSC03601-min.webp",
+    "/images/gallery/diamond/interior/dsc03601-min.webp",
   "concerts-sports": "/images/gallery/infiniti-qx56/exterior/01.webp",
-  birthday: "/images/gallery/tiffany-miami/interior/DSC03542-min.webp",
+  birthday: "/images/gallery/tiffany-miami/interior/dsc03542-min.webp",
   graduation: "/images/gallery/lincoln-navigator/exterior/01.webp",
   "kids-party-bus": defaultPartyBusImage,
 };

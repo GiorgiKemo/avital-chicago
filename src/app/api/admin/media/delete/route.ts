@@ -32,10 +32,12 @@ export async function POST(request: Request) {
 
   const formData = await request.formData();
   const path = String(formData.get("path") ?? "");
+  const returnPageKey = String(formData.get("returnPageKey") ?? "").trim();
 
   if (!isSafeStoragePath(path)) {
     return redirectWithMessage(request, {
       error: "That file path is not valid.",
+      ...(returnPageKey ? { page: returnPageKey } : {}),
     });
   }
 
@@ -56,12 +58,14 @@ export async function POST(request: Request) {
   if (slotError || galleryError) {
     return redirectWithMessage(request, {
       error: slotError?.message || galleryError?.message || "Could not validate image usage.",
+      ...(returnPageKey ? { page: returnPageKey } : {}),
     });
   }
 
   if ((slotUsage?.length ?? 0) > 0 || (galleryUsage?.length ?? 0) > 0) {
     return redirectWithMessage(request, {
       error: "That image is still in use on the website. Reset it from the page editor first.",
+      ...(returnPageKey ? { page: returnPageKey } : {}),
     });
   }
 
@@ -70,6 +74,7 @@ export async function POST(request: Request) {
   if (error) {
     return redirectWithMessage(request, {
       error: error.message,
+      ...(returnPageKey ? { page: returnPageKey } : {}),
     });
   }
 
@@ -77,5 +82,6 @@ export async function POST(request: Request) {
 
   return redirectWithMessage(request, {
     status: "deleted",
+    ...(returnPageKey ? { page: returnPageKey } : {}),
   });
 }

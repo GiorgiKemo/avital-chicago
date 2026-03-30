@@ -30,12 +30,14 @@ export async function POST(request: Request) {
   const slotKey = String(formData.get("slotKey") ?? "");
   const bucketPath = String(formData.get("bucketPath") ?? "").trim();
   const altText = String(formData.get("altText") ?? "").trim();
+  const returnPageKey = String(formData.get("returnPageKey") ?? "").trim();
 
   const definition = getSiteMediaSlotDefinition(slotKey);
 
   if (!definition) {
     return redirectWithMessage(request, {
       error: "That site image slot does not exist.",
+      ...(returnPageKey ? { page: returnPageKey } : {}),
     });
   }
 
@@ -45,6 +47,7 @@ export async function POST(request: Request) {
     if (error) {
       return redirectWithMessage(request, {
         error: error.message,
+        ...(returnPageKey ? { page: returnPageKey } : {}),
       });
     }
 
@@ -55,6 +58,7 @@ export async function POST(request: Request) {
 
     return redirectWithMessage(request, {
       status: "slot-reset",
+      ...(returnPageKey ? { page: returnPageKey } : {}),
     });
   }
 
@@ -73,6 +77,7 @@ export async function POST(request: Request) {
   if (error) {
     return redirectWithMessage(request, {
       error: error.message,
+      ...(returnPageKey ? { page: returnPageKey } : {}),
     });
   }
 
@@ -85,5 +90,6 @@ export async function POST(request: Request) {
 
   return redirectWithMessage(request, {
     status: "slot-saved",
+    ...(returnPageKey ? { page: returnPageKey } : {}),
   });
 }

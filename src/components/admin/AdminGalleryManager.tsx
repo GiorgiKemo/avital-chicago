@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { useMemo, useState } from "react";
 import { ArrowDown, ArrowUp, Images, Plus, Trash2 } from "lucide-react";
+import AdminPreviewImage from "@/components/admin/AdminPreviewImage";
 
 type UploadedFile = {
   name: string;
@@ -29,6 +29,7 @@ type AdminGalleryManagerProps = {
   defaultGalleryCount?: number;
   initialItems: InitialGalleryItem[];
   files: UploadedFile[];
+  returnPageKey?: string;
 };
 
 function createRow(seed = ""): GalleryRow {
@@ -47,6 +48,7 @@ export default function AdminGalleryManager({
   defaultGalleryCount,
   initialItems,
   files,
+  returnPageKey,
 }: AdminGalleryManagerProps) {
   const [rows, setRows] = useState<GalleryRow[]>(
     initialItems.map((item, index) => ({
@@ -92,7 +94,7 @@ export default function AdminGalleryManager({
   const hasCustomGallery = rows.some((row) => row.bucketPath);
 
   return (
-    <div className="rounded-3xl border border-primary/12 bg-primary/[0.03] p-5">
+    <div className="rounded-[28px] border border-primary/12 bg-primary/[0.03] p-6">
       <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
@@ -143,6 +145,7 @@ export default function AdminGalleryManager({
       ) : (
         <form action="/api/admin/site-media-gallery" method="post" className="space-y-5">
           <input type="hidden" name="pageKey" value={pageKey} />
+          <input type="hidden" name="returnPageKey" value={returnPageKey || pageKey} />
 
           <div className="space-y-4">
             {rows.length === 0 ? (
@@ -194,12 +197,11 @@ export default function AdminGalleryManager({
                   <div className="grid gap-4 lg:grid-cols-[220px_minmax(0,1fr)]">
                     <div className="overflow-hidden rounded-2xl border border-white/8 bg-black/20">
                       {previewUrl ? (
-                        <Image
+                        <AdminPreviewImage
                           src={previewUrl}
                           alt={row.altText || `${pageLabel} gallery preview`}
-                          width={640}
-                          height={480}
                           className="aspect-[4/3] h-full w-full object-cover"
+                          fallbackLabel="Preview unavailable"
                         />
                       ) : (
                         <div className="flex aspect-[4/3] items-center justify-center text-xs uppercase tracking-[0.18em] text-muted-foreground">

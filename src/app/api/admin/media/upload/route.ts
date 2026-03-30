@@ -70,10 +70,12 @@ export async function POST(request: Request) {
   const formData = await request.formData();
   const file = formData.get("file");
   const fileNameHint = String(formData.get("name") ?? "");
+  const returnPageKey = String(formData.get("returnPageKey") ?? "").trim();
 
   if (!(file instanceof File) || file.size === 0) {
     return redirectWithMessage(request, {
       error: "Choose an image before uploading.",
+      ...(returnPageKey ? { page: returnPageKey } : {}),
     });
   }
 
@@ -82,12 +84,14 @@ export async function POST(request: Request) {
       error: `That image is too large. Max size is ${Math.floor(
         MAX_MEDIA_UPLOAD_BYTES / (1024 * 1024),
       )}MB.`,
+      ...(returnPageKey ? { page: returnPageKey } : {}),
     });
   }
 
   if (!MEDIA_ACCEPT.includes(file.type)) {
     return redirectWithMessage(request, {
       error: "That file type is not allowed for the media bucket.",
+      ...(returnPageKey ? { page: returnPageKey } : {}),
     });
   }
 
@@ -98,6 +102,7 @@ export async function POST(request: Request) {
   if (!isSafeStoragePath(path)) {
     return redirectWithMessage(request, {
       error: "We could not create a safe filename for that upload.",
+      ...(returnPageKey ? { page: returnPageKey } : {}),
     });
   }
 
@@ -111,6 +116,7 @@ export async function POST(request: Request) {
   if (error) {
     return redirectWithMessage(request, {
       error: error.message,
+      ...(returnPageKey ? { page: returnPageKey } : {}),
     });
   }
 
@@ -118,5 +124,6 @@ export async function POST(request: Request) {
 
   return redirectWithMessage(request, {
     status: "uploaded",
+    ...(returnPageKey ? { page: returnPageKey } : {}),
   });
 }

@@ -106,7 +106,7 @@ const serviceSlots: SiteMediaSlotDefinition[] = [
   [
     "night-parties",
     "Night Out Parties",
-    "/images/gallery/tiffany-miami/interior/DSC03542-min.webp",
+    "/images/gallery/tiffany-miami/interior/dsc03542-min.webp",
     "Night out party bus interior",
   ],
   [
@@ -118,7 +118,7 @@ const serviceSlots: SiteMediaSlotDefinition[] = [
   [
     "bachelor-bachelorette",
     "Bachelor & Bachelorette",
-    "/images/gallery/diamond/interior/DSC03601-min.webp",
+    "/images/gallery/diamond/interior/dsc03601-min.webp",
     "Bachelor and bachelorette party bus service",
   ],
   [
@@ -130,7 +130,7 @@ const serviceSlots: SiteMediaSlotDefinition[] = [
   [
     "birthday",
     "Birthday Celebrations",
-    "/images/gallery/tiffany-miami/interior/DSC03542-min.webp",
+    "/images/gallery/tiffany-miami/interior/dsc03542-min.webp",
     "Birthday party transportation",
   ],
   [
@@ -319,7 +319,7 @@ export const siteMediaSlots: SiteMediaSlotDefinition[] = [
     section: "Fleet Pages",
     page: limoFleetPage,
     description: "Main fleet hero image for the limousine landing page.",
-    defaultSrc: "/images/gallery/cadillac-escalade/exterior/CADILLAC ESCALADE.webp",
+    defaultSrc: "/images/gallery/cadillac-escalade/exterior/CADILLAC%20ESCALADE.webp",
     defaultAlt: "Cadillac Escalade limousine from the legacy Avital fleet",
   },
   {
@@ -329,7 +329,7 @@ export const siteMediaSlots: SiteMediaSlotDefinition[] = [
     page: limoFleetPage,
     description: "Side spotlight image on the limo fleet page.",
     defaultSrc:
-      "/images/gallery/hummer-h2-white-pearl/exterior/HUMMER H2 WHITE PEARL.webp",
+      "/images/gallery/hummer-h2-white-pearl/exterior/HUMMER%20H2%20WHITE%20PEARL.webp",
     defaultAlt: "White Hummer stretch limousine from the legacy Avital fleet",
   },
   {
@@ -338,7 +338,7 @@ export const siteMediaSlots: SiteMediaSlotDefinition[] = [
     section: "Kids Page",
     page: kidsPage,
     description: "Primary hero image for the kids party bus page.",
-    defaultSrc: "/images/kids/KidsHome.webp",
+    defaultSrc: "/images/kids/kidshome.webp",
     defaultAlt: "Kids party bus rental in Chicago",
   },
   {
@@ -347,7 +347,7 @@ export const siteMediaSlots: SiteMediaSlotDefinition[] = [
     section: "Kids Page",
     page: kidsPage,
     description: "Interior image for the kids page experience section.",
-    defaultSrc: "/images/kids/Test2.webp",
+    defaultSrc: "/images/kids/test2.webp",
     defaultAlt: "Kids party bus interior",
   },
   {

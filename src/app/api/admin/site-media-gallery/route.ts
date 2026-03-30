@@ -33,12 +33,14 @@ export async function POST(request: Request) {
   const formData = await request.formData();
   const pageKey = String(formData.get("pageKey") ?? "").trim();
   const action = String(formData.get("action") ?? "save").trim();
+  const returnPageKey = String(formData.get("returnPageKey") ?? "").trim();
 
   const pageDefinition = getSiteMediaPageDefinition(pageKey);
 
   if (!pageDefinition?.supportsGallery) {
     return redirectWithMessage(request, {
       error: "That page does not support admin gallery management.",
+      ...(returnPageKey ? { page: returnPageKey } : {}),
     });
   }
 
@@ -50,6 +52,7 @@ export async function POST(request: Request) {
   if (deleteError) {
     return redirectWithMessage(request, {
       error: deleteError.message,
+      ...(returnPageKey ? { page: returnPageKey } : {}),
     });
   }
 
@@ -68,11 +71,12 @@ export async function POST(request: Request) {
       }))
       .filter((item) => item.bucketPath);
 
-    if (items.some((item) => !isSafeStoragePath(item.bucketPath))) {
-      return redirectWithMessage(request, {
-        error: "One of the selected gallery files is not a valid storage path.",
-      });
-    }
+      if (items.some((item) => !isSafeStoragePath(item.bucketPath))) {
+        return redirectWithMessage(request, {
+          error: "One of the selected gallery files is not a valid storage path.",
+          ...(returnPageKey ? { page: returnPageKey } : {}),
+        });
+      }
 
     if (items.length > 0) {
       const { error: insertError } = await supabase.from("site_media_galleries").insert(
@@ -86,12 +90,13 @@ export async function POST(request: Request) {
         })),
       );
 
-      if (insertError) {
-        return redirectWithMessage(request, {
-          error: insertError.message,
-        });
+        if (insertError) {
+          return redirectWithMessage(request, {
+            error: insertError.message,
+            ...(returnPageKey ? { page: returnPageKey } : {}),
+          });
+        }
       }
-    }
   }
 
   revalidatePath("/admin/media");
@@ -101,5 +106,6 @@ export async function POST(request: Request) {
 
   return redirectWithMessage(request, {
     status: action === "reset" ? "gallery-reset" : "gallery-saved",
+    ...(returnPageKey ? { page: returnPageKey } : {}),
   });
 }
