@@ -35,7 +35,7 @@ export default function ServicesPage() {
                 href={`/services/${service.slug}`}
                 className="group glass-card overflow-hidden"
               >
-                <div className="image-hover-zoom relative aspect-[4/3]">
+                <div className="image-hover-zoom relative aspect-[3/2]">
                   <ManagedImage
                     slotKey={getServiceSlotKey(service.slug)}
                     fallbackSrc={getServiceImage(service.slug)}

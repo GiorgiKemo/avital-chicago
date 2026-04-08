@@ -15,6 +15,7 @@ import QuoteForm from "@/components/QuoteForm";
 import VehicleCard from "@/components/VehicleCard";
 import { limousines, partyBuses, services } from "@/lib/site-data";
 import { getHomepageServiceCardImage } from "@/lib/site-data";
+import FadeIn from "@/components/FadeIn";
 
 export default function HomePage() {
   return (
@@ -28,24 +29,25 @@ export default function HomePage() {
       </section>
 
       <section className="relative py-24">
-        <div className="blur-orb -left-60 -top-60 h-[600px] w-[600px]" />
         <div className="container relative z-10 mx-auto px-6">
-          <div className="mb-16 text-center">
-            <p className="pink-label mb-4">Our Services</p>
-            <h2 className="section-heading">
-              Unforgettable{" "}
-              <span className="gradient-text font-semibold">Experiences</span>
-            </h2>
-          </div>
+          <FadeIn>
+            <div className="mb-16 text-center">
+              <p className="pink-label mb-4">Our Services</p>
+              <h2 className="section-heading">
+                Unforgettable{" "}
+                <span className="gradient-text font-semibold">Experiences</span>
+              </h2>
+            </div>
+          </FadeIn>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {services.slice(0, 3).map((service) => (
-              <Link
-                key={service.slug}
-                href={`/services/${service.slug}`}
-                className="group relative h-[450px] overflow-hidden rounded-xl"
-              >
-                <div className="image-hover-zoom absolute inset-0">
+            {services.slice(0, 3).map((service, index) => (
+              <FadeIn key={service.slug} delay={index * 0.15}>
+                <Link
+                  href={`/services/${service.slug}`}
+                  className="group relative block aspect-[3/2] w-full overflow-hidden rounded-xl"
+                >
+                  <div className="image-hover-zoom absolute inset-0">
                   <Image
                     src={getHomepageServiceCardImage(service.slug)}
                     alt={service.name}
@@ -55,16 +57,17 @@ export default function HomePage() {
                     quality={95}
                   />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent transition-opacity duration-500" />
                 <div className="absolute inset-x-0 bottom-0 p-6">
                   <h3 className="font-serif text-2xl text-foreground">
                     {service.name}
                   </h3>
-                  <p className="mt-1 text-sm text-muted-foreground opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <p className="mt-2 text-sm text-foreground/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     {service.shortDescription}
                   </p>
                 </div>
-              </Link>
+                </Link>
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -74,51 +77,61 @@ export default function HomePage() {
 
       <section className="py-24">
         <div className="container mx-auto px-6">
-          <div className="mb-16 text-center">
-            <p className="pink-label mb-4">Our Fleet</p>
-            <h2 className="section-heading">
-              Premium <span className="gradient-text font-semibold">Vehicles</span>
-            </h2>
-          </div>
+          <FadeIn>
+            <div className="mb-16 text-center">
+              <p className="pink-label mb-4">Our Fleet</p>
+              <h2 className="section-heading">
+                Premium <span className="gradient-text font-semibold">Vehicles</span>
+              </h2>
+            </div>
+          </FadeIn>
 
           <div className="mb-16">
-            <div className="mb-6 flex items-center justify-between gap-4">
-              <h3 className="font-serif text-2xl text-foreground">Party Buses</h3>
-              <Link
-                href="/chicago-party-bus-rental"
-                className="flex items-center gap-1 text-sm text-primary transition-colors hover:text-primary/80"
-              >
-                View All <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
+            <FadeIn delay={0.1}>
+              <div className="mb-6 flex items-center justify-between gap-4">
+                <h3 className="font-serif text-2xl text-foreground">Party Buses</h3>
+                <Link
+                  href="/chicago-party-bus-rental"
+                  className="flex items-center gap-1 text-sm text-primary transition-colors hover:text-primary/80"
+                >
+                  View All <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </FadeIn>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {partyBuses.slice(0, 3).map((vehicle) => (
-                <VehicleCard
-                  key={vehicle.slug}
-                  vehicle={vehicle}
-                  basePath="/chicago-party-bus-rental"
-                />
+              {partyBuses.slice(0, 3).map((vehicle, index) => (
+                <FadeIn key={vehicle.slug} delay={index * 0.15}>
+                  <VehicleCard
+                    vehicle={vehicle}
+                    basePath="/chicago-party-bus-rental"
+                    preferLegacyCardImage
+                  />
+                </FadeIn>
               ))}
             </div>
           </div>
 
           <div>
-            <div className="mb-6 flex items-center justify-between gap-4">
-              <h3 className="font-serif text-2xl text-foreground">Limousines</h3>
-              <Link
-                href="/chicago-limo-rental"
-                className="flex items-center gap-1 text-sm text-primary transition-colors hover:text-primary/80"
-              >
-                View All <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
+            <FadeIn delay={0.1}>
+              <div className="mb-6 flex items-center justify-between gap-4">
+                <h3 className="font-serif text-2xl text-foreground">Limousines</h3>
+                <Link
+                  href="/chicago-limo-rental"
+                  className="flex items-center gap-1 text-sm text-primary transition-colors hover:text-primary/80"
+                >
+                  View All <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </FadeIn>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {limousines.slice(0, 3).map((vehicle) => (
-                <VehicleCard
-                  key={vehicle.slug}
-                  vehicle={vehicle}
-                  basePath="/chicago-limo-rental"
-                />
+              {limousines.slice(0, 3).map((vehicle, index) => (
+                <FadeIn key={vehicle.slug} delay={index * 0.15}>
+                  <VehicleCard
+                    vehicle={vehicle}
+                    basePath="/chicago-limo-rental"
+                    preferLegacyCardImage
+                  />
+                </FadeIn>
               ))}
             </div>
           </div>
@@ -128,26 +141,26 @@ export default function HomePage() {
       <div className="gradient-divider" />
 
       <section className="relative py-24">
-        <div className="blur-orb right-0 top-0 h-[500px] w-[500px]" />
         <div className="container relative z-10 mx-auto px-6">
           <div className="grid grid-cols-1 gap-16 lg:grid-cols-2">
-            <div>
-              <p className="pink-label mb-4">About Us</p>
-              <h2 className="section-heading mb-6">
-                Chicago&apos;s Most{" "}
-                <span className="gradient-text font-semibold">Trusted</span>{" "}
-                Transportation
-              </h2>
-              <p className="mb-6 leading-relaxed text-muted-foreground">
-                Avital Chicago Limousine And Party Bus is built around luxury
-                group transportation for weddings, quinceaneras, proms, nights
-                out, concerts, and private events throughout Chicagoland.
-              </p>
-              <p className="mb-8 leading-relaxed text-muted-foreground">
-                Our fleet pairs bold vehicle choices with professional chauffeur
-                service, premium interiors, and image-rich galleries that help
-                clients pick the right vehicle before they book.
-              </p>
+            <FadeIn direction="right">
+              <div>
+                <p className="pink-label mb-4">About Us</p>
+                <h2 className="section-heading mb-6">
+                  Chicago&apos;s Most{" "}
+                  <span className="gradient-text font-semibold">Trusted</span>{" "}
+                  Transportation
+                </h2>
+                <p className="mb-6 leading-relaxed text-muted-foreground">
+                  Avital Chicago Limousine And Party Bus is built around luxury
+                  group transportation for weddings, quinceaneras, proms, nights
+                  out, concerts, and private events throughout Chicagoland.
+                </p>
+                <p className="mb-8 leading-relaxed text-muted-foreground">
+                  Our fleet pairs bold vehicle choices with professional chauffeur
+                  service, premium interiors, and image-rich galleries that help
+                  clients pick the right vehicle before they book.
+                </p>
               <div className="grid grid-cols-2 gap-3">
                 {[
                   "Weddings",
@@ -165,13 +178,15 @@ export default function HomePage() {
                     {item} {"->"}
                   </Link>
                 ))}
+                </div>
               </div>
-            </div>
+            </FadeIn>
 
-            <div className="glass-card p-8">
-              <h3 className="mb-8 font-serif text-xl text-foreground">
-                Vehicle Features
-              </h3>
+            <FadeIn delay={0.2} direction="left" className="h-full">
+              <div className="glass-card p-8 h-full">
+                <h3 className="mb-8 font-serif text-xl text-foreground">
+                  Vehicle Features
+                </h3>
               {[
                 {
                   icon: Sparkles,
@@ -212,6 +227,7 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
+            </FadeIn>
           </div>
         </div>
       </section>
@@ -220,12 +236,14 @@ export default function HomePage() {
 
       <section className="py-24">
         <div className="container mx-auto px-6">
-          <div className="mb-16 text-center">
-            <p className="pink-label mb-4">Why Choose Us</p>
-            <h2 className="section-heading">
-              The Avital <span className="gradient-text font-semibold">Difference</span>
-            </h2>
-          </div>
+          <FadeIn>
+            <div className="mb-16 text-center">
+              <p className="pink-label mb-4">Why Choose Us</p>
+              <h2 className="section-heading">
+                The Avital <span className="gradient-text font-semibold">Difference</span>
+              </h2>
+            </div>
+          </FadeIn>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {[
@@ -265,22 +283,21 @@ export default function HomePage() {
                 title: "Experienced Chauffeurs",
                 desc: "Drivers trained for event-day reliability and polished service.",
               },
-            ].map((card) => (
-              <div
-                key={card.num}
-                className="glass-card p-8 transition-all duration-300 hover:border-primary/20"
-              >
-                <span className="gradient-text font-serif text-3xl font-semibold">
-                  {card.num}
-                </span>
-                <div className="mb-4 mt-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                  <card.icon className="h-5 w-5 text-primary" />
+            ].map((card, index) => (
+              <FadeIn key={card.num} delay={index * 0.1} className="h-full">
+                <div className="glass-card p-8 h-full transition-all duration-300 hover:border-primary/20">
+                  <span className="gradient-text font-serif text-3xl font-semibold">
+                    {card.num}
+                  </span>
+                  <div className="mb-4 mt-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                    <card.icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="mb-2 text-lg font-medium text-foreground">
+                    {card.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">{card.desc}</p>
                 </div>
-                <h3 className="mb-2 text-lg font-medium text-foreground">
-                  {card.title}
-                </h3>
-                <p className="text-sm text-muted-foreground">{card.desc}</p>
-              </div>
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -288,22 +305,23 @@ export default function HomePage() {
 
       <div className="gradient-divider" />
 
-      <section className="relative py-24 text-center">
-        <div className="blur-orb left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2" />
+      <section className="relative py-32 text-center">
         <div className="container relative z-10 mx-auto px-6">
-          <p className="pink-label mb-4">Book Today</p>
-          <h2 className="section-heading mb-8">
-            Ready to Experience{" "}
-            <span className="gradient-text font-semibold">Luxury</span>?
-          </h2>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contact-us" className="btn-primary">
-              Get a Free Quote <ArrowRight className="h-4 w-4" />
-            </Link>
-            <a href="tel:6305506753" className="btn-outline">
-              Call (630) 550-6753 <ArrowRight className="h-4 w-4" />
-            </a>
-          </div>
+          <FadeIn>
+            <p className="pink-label mb-4">Book Today</p>
+            <h2 className="section-heading mb-8">
+              Ready to Experience{" "}
+              <span className="gradient-text font-semibold">Luxury</span>?
+            </h2>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link href="/contact-us" className="btn-primary">
+                Get a Free Quote <ArrowRight className="h-4 w-4" />
+              </Link>
+              <a href="tel:6305506753" className="btn-outline">
+                Call (630) 550-6753 <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
+          </FadeIn>
         </div>
       </section>
     </>

@@ -200,11 +200,11 @@ export default function AdminGalleryManager({
                         <AdminPreviewImage
                           src={previewUrl}
                           alt={row.altText || `${pageLabel} gallery preview`}
-                          className="aspect-[4/3] h-full w-full object-cover"
+                          className="aspect-[3/2] h-full w-full object-cover"
                           fallbackLabel="Preview unavailable"
                         />
                       ) : (
-                        <div className="flex aspect-[4/3] items-center justify-center text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                        <div className="flex aspect-[3/2] items-center justify-center text-xs uppercase tracking-[0.18em] text-muted-foreground">
                           No image selected
                         </div>
                       )}

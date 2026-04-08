@@ -44,7 +44,7 @@ function withLegacyCardImage(vehicle: Vehicle): Vehicle {
 function getVehicleImages(slug: string): string[] {
   const entry = imageManifest[slug];
   if (!entry) return ["/images/gallery/hummer-h2-triple-axle/exterior/01.webp"];
-  return [...entry.interior, ...entry.exterior].slice(0, 20);
+  return [...entry.exterior, ...entry.interior].slice(0, 20);
 }
 
 // ===== PARTY BUSES =====

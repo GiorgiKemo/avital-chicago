@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Calendar, Star, Users } from "lucide-react";
 import ManagedImage from "@/components/ManagedImage";
+import FadeIn from "@/components/FadeIn";
 
 const heroImages = [
   {
@@ -60,10 +61,9 @@ export default function HomeHero() {
       {heroImages.map((image, index) => (
         <div
           key={image.src}
-          className="absolute inset-0 transition-[opacity,transform] duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+          className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
           style={{
             opacity: index === heroIndex ? 1 : 0,
-            transform: index !== heroIndex ? "scale(1)" : "scale(1.035)",
           }}
         >
           <ManagedImage
@@ -80,49 +80,55 @@ export default function HomeHero() {
         </div>
       ))}
 
-      <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/72 to-background/38" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(212,20,90,0.16),transparent_32%)]" />
-      <div className="blur-orb bottom-0 left-1/4 h-[500px] w-[500px]" />
+      <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/60 to-background/20" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(212,20,90,0.1),transparent_50%)]" />
 
       <div className="container relative z-10 mx-auto grid grid-cols-1 items-center gap-12 px-6">
-        <div>
-          <p className="pink-label mb-6">Chicago&apos;s Premier Transportation</p>
-          <h1 className="mb-8 font-serif text-6xl font-semibold leading-[0.98] md:text-7xl lg:text-[6.75rem]">
-            Luxury
-            <br />
-            <span className="gradient-text font-bold">Party Bus</span>
-            <br />& Limousine
-          </h1>
+        <div className="max-w-4xl">
+          <FadeIn delay={0.1}>
+            <p className="pink-label mb-6 border-l-2 border-primary pl-4 tracking-[0.3em]">Chicago&apos;s Premier Transportation</p>
+            <h1 className="mb-8 font-serif text-6xl font-light leading-[1] md:text-7xl lg:text-[7rem]">
+              Luxury
+              <br />
+              <span className="gradient-text font-bold">Party Bus</span>
+              <br />& Limousine
+            </h1>
+          </FadeIn>
 
-          <div className="mb-10 flex flex-wrap gap-6">
-            {heroStats.map((badge) => (
-              <div
-                key={badge.sub}
-                className="glass-card flex items-center gap-3 px-5 py-3"
-              >
-                <badge.icon className="h-5 w-5 text-primary" />
-                <div>
-                  <p className="text-lg font-semibold leading-none text-foreground">
-                    {badge.label}
-                  </p>
-                  <p className="text-xs text-muted-foreground">{badge.sub}</p>
+          <div className="mb-12 flex flex-wrap gap-8">
+            {heroStats.map((badge, index) => (
+              <FadeIn key={badge.sub} delay={0.2 + index * 0.1}>
+                <div
+                  className="flex items-center gap-4 py-2"
+                >
+                  <div className="flex h-12 w-12 items-center justify-center border border-border/50 bg-card/20 backdrop-blur-sm">
+                    <badge.icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-serif leading-none tracking-tight text-foreground">
+                      {badge.label}
+                    </p>
+                    <p className="mt-1 text-[10px] uppercase tracking-[0.15em] text-muted-foreground">{badge.sub}</p>
+                  </div>
                 </div>
-              </div>
+              </FadeIn>
             ))}
           </div>
 
-          <div className="flex flex-wrap gap-4">
-            <div>
-              <Link href="/chicago-party-bus-rental" className="btn-primary">
-                Explore Fleet <ArrowRight className="h-4 w-4" />
-              </Link>
+          <FadeIn delay={0.3}>
+            <div className="flex flex-wrap gap-4">
+              <div>
+                <Link href="/chicago-party-bus-rental" className="btn-primary">
+                  Explore Fleet <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+              <div>
+                <a href="tel:6305506753" className="btn-outline">
+                  Call Now <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
             </div>
-            <div>
-              <a href="tel:6305506753" className="btn-outline">
-                Call Now <ArrowRight className="h-4 w-4" />
-              </a>
-            </div>
-          </div>
+          </FadeIn>
         </div>
       </div>
     </section>

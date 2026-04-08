@@ -30,6 +30,7 @@ export async function POST(request: Request) {
   const slotKey = String(formData.get("slotKey") ?? "");
   const bucketPath = String(formData.get("bucketPath") ?? "").trim();
   const altText = String(formData.get("altText") ?? "").trim();
+  const objectFit = String(formData.get("objectFit") ?? "cover").trim();
   const returnPageKey = String(formData.get("returnPageKey") ?? "").trim();
 
   const definition = getSiteMediaSlotDefinition(slotKey);
@@ -67,6 +68,7 @@ export async function POST(request: Request) {
       slot_key: slotKey,
       bucket_path: bucketPath,
       alt_text: altText || definition.defaultAlt,
+      object_fit: objectFit,
       updated_by_email: user.email ?? null,
     },
     {

@@ -63,11 +63,15 @@ export async function POST(request: Request) {
     const altTexts = formData
       .getAll("galleryAlt")
       .map((value) => String(value ?? "").trim());
+    const objectFits = formData
+      .getAll("galleryObjectFit")
+      .map((value) => String(value ?? "cover").trim());
 
     const items = bucketPaths
       .map((bucketPath, index) => ({
         bucketPath,
         altText: altTexts[index] ?? "",
+        objectFit: objectFits[index] ?? "cover",
       }))
       .filter((item) => item.bucketPath);
 
@@ -86,6 +90,7 @@ export async function POST(request: Request) {
           bucket_path: item.bucketPath,
           alt_text:
             item.altText || `${pageDefinition.label} gallery image ${index + 1}`,
+          object_fit: item.objectFit,
           updated_by_email: user.email ?? null,
         })),
       );

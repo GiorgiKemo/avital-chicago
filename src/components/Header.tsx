@@ -52,15 +52,17 @@ export default function Header() {
     >
       <div className="container mx-auto flex h-20 items-center justify-between px-6">
         <Link href="/" className="flex items-center" aria-label="Avital Chicago home">
-          <ManagedImage
-            slotKey="site.logo.header"
-            fallbackSrc="/images/logos/logo.webp"
-            fallbackAlt="Avital Chicago logo"
-            width={174}
-            height={45}
-            priority
-            className="shrink-0"
-          />
+          <div className="relative h-[45px] w-[174px] shrink-0">
+            <ManagedImage
+              slotKey="site.logo.header"
+              fallbackSrc="/images/logos/logo.webp"
+              fallbackAlt="Avital Chicago logo"
+              fill
+              priority
+              sizes="174px"
+              className="object-contain"
+            />
+          </div>
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">

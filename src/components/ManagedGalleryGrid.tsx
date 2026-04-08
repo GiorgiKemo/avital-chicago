@@ -97,7 +97,7 @@ export default function ManagedGalleryGrid({
       {resolvedItems.map((image, index) => (
         <div
           key={`${image.src}-${index}`}
-          className="image-hover-zoom relative aspect-[4/3] overflow-hidden rounded-2xl border border-border"
+          className="image-hover-zoom relative aspect-[3/2] overflow-hidden rounded-2xl border border-border"
         >
           <Image
             src={image.src}

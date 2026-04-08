@@ -283,6 +283,7 @@ export default function VehicleDetailPage({
                   key={relatedVehicle.slug}
                   vehicle={relatedVehicle}
                   basePath={basePath}
+                  preferLegacyCardImage
                 />
               ))}
             </div>

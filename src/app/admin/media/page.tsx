@@ -41,7 +41,7 @@ function formatBytes(bytes: number) {
 function getStatusMessage(status?: string, error?: string, uploaded?: string) {
   if (status === "uploaded") {
     return {
-      tone: "success",
+      tone: "success" as const,
       text: uploaded
         ? `Image uploaded successfully. "${uploaded}" is ready to apply.`
         : "Image uploaded successfully.",
@@ -49,23 +49,23 @@ function getStatusMessage(status?: string, error?: string, uploaded?: string) {
   }
 
   if (status === "deleted") {
-    return { tone: "success", text: "Image removed successfully." };
+    return { tone: "success" as const, text: "Image removed successfully." };
   }
 
   if (status === "slot-saved") {
-    return { tone: "success", text: "That website image slot has been updated." };
+    return { tone: "success" as const, text: "That website image slot has been updated." };
   }
 
   if (status === "slot-reset") {
-    return { tone: "success", text: "That image slot is back on its built-in default." };
+    return { tone: "success" as const, text: "That image slot is back on its built-in default." };
   }
 
   if (status === "gallery-saved") {
-    return { tone: "success", text: "That page gallery has been updated." };
+    return { tone: "success" as const, text: "That page gallery has been updated." };
   }
 
   if (status === "gallery-reset") {
-    return { tone: "success", text: "That page gallery is back on its built-in default." };
+    return { tone: "success" as const, text: "That page gallery is back on its built-in default." };
   }
 
   if (!error) {
@@ -73,7 +73,7 @@ function getStatusMessage(status?: string, error?: string, uploaded?: string) {
   }
 
   return {
-    tone: "error",
+    tone: "error" as const,
     text: error,
   };
 }
@@ -102,16 +102,16 @@ export default async function AdminMediaPage({
         publicUrl: supabase.storage.from(ADMIN_MEDIA_BUCKET).getPublicUrl(item.name)
           .data.publicUrl,
         size: typeof item.metadata?.size === "number" ? item.metadata.size : 0,
-        createdAt: item.created_at,
+        createdAt: item.created_at || "",
       })) ?? [];
 
   const { data: slotRows } = await supabase
     .from("site_media_slots")
-    .select("slot_key,bucket_path,alt_text,updated_at");
+    .select("slot_key,bucket_path,alt_text,updated_at,object_fit");
 
   const { data: galleryRows } = await supabase
     .from("site_media_galleries")
-    .select("page_key,position,bucket_path,alt_text,updated_at")
+    .select("page_key,position,bucket_path,alt_text,updated_at,object_fit")
     .order("position", { ascending: true });
 
   const sectionMap = new Map<string, Map<string, PageSlotGroup>>();
@@ -148,6 +148,7 @@ export default async function AdminMediaPage({
       {
         bucketPath: row.bucket_path,
         altText: row.alt_text || "",
+        objectFit: row.object_fit || "cover",
         updatedAt: row.updated_at,
         publicUrl: row.bucket_path
           ? supabase.storage.from(ADMIN_MEDIA_BUCKET).getPublicUrl(row.bucket_path).data
@@ -162,6 +163,7 @@ export default async function AdminMediaPage({
     {
       bucketPath: string;
       altText: string;
+      objectFit: string;
       updatedAt: string | null;
       publicUrl: string;
     }[]
@@ -175,6 +177,7 @@ export default async function AdminMediaPage({
     galleryAssignments[row.page_key].push({
       bucketPath: row.bucket_path,
       altText: row.alt_text || "",
+      objectFit: row.object_fit || "cover",
       updatedAt: row.updated_at,
       publicUrl: supabase.storage.from(ADMIN_MEDIA_BUCKET).getPublicUrl(row.bucket_path).data
         .publicUrl,

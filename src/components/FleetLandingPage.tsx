@@ -356,7 +356,7 @@ export default function FleetLandingPage({
                   href={`/blog/${post.slug}`}
                   className="group glass-card overflow-hidden"
                 >
-                  <div className="image-hover-zoom relative aspect-[4/3]">
+                  <div className="image-hover-zoom relative aspect-[3/2]">
                     <Image
                       src={
                         post.featuredImage ||
