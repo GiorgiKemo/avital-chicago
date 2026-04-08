@@ -142,6 +142,7 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    // Leave all Next.js internals alone, including the dev HMR websocket.
+    "/((?!api|_next|favicon.ico|sitemap.xml|robots.txt).*)",
   ],
 };

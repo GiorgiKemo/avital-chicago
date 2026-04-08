@@ -3,6 +3,10 @@ import { publicIntegrations } from "@/lib/site-config";
 import ChatWidget from "@/components/chat/ChatWidget";
 
 export default function SiteIntegrations() {
+  if (process.env.NODE_ENV !== "production") {
+    return <ChatWidget />;
+  }
+
   return (
     <>
       <noscript>

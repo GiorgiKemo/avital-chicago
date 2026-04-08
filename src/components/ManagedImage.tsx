@@ -53,7 +53,7 @@ export default function ManagedImage({
   useEffect(() => {
     let active = true;
 
-    loadSlotAssignments(true).then((slots) => {
+    loadSlotAssignments().then((slots) => {
       if (active) {
         setResolved(slots[slotKey] ?? null);
       }
